@@ -1,0 +1,26 @@
+@import url(./normalize.css);
+
+.page {
+  box-sizing: border-box;
+  background: black;
+}
+
+.page > * {
+  padding: 0 70px;
+}
+
+.block {
+  background: white;
+}
+
+.block__element {
+  color: red;
+}
+
+.header {
+  background: #073042;
+}
+
+.promo {
+  background: #073042;
+}
