@@ -2,7 +2,9 @@
 
 .page {
   box-sizing: border-box;
-  background: black;
+  background: purple;
+  max-width: 1360px; /*!!!!*/
+  margin: auto;
 }
 
 .page > * {
@@ -17,10 +19,169 @@
   color: red;
 }
 
+/* header */
+
 .header {
   background: #073042;
+  display: flex;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
+/* header__logo */
+.header__logo {
+}
+
+/* header__nav */
+.header__nav {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* header__menu */
+.header__menu {
+}
+
+.header__menu_align-right {
+  margin-left: auto;
+}
+/* header__button */
+.header__button {
+  background: none;
+  border: none;
+}
+
+.header__button_type-login {
+  color: white;
+  background-color: #2be080;
+  width: 76px;
+  height: 32px;
+  border-radius: 3px;
+}
+
+.header__button_type-signup {
+  color: black;
+}
+
+/* promo */
 .promo {
-  background: #073042;
+  background: #073042 no-repeat center;
+  background-image: url(pic__COLOR_landing-logo.svg);
+  background-size: 320px;
+  background-position-y: 82px;
+  height: 524px;
+  display: flex;
+}
+
+.promo__title {
+  color: white;
+  width: 730px;
+  text-align: center;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  margin: 184px auto;
+}
+
+/* navtab */
+
+.navtab {
+  color: white;
+  background-color: black;
+  padding: 24px 502px;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.navtab__menu {
+  margin: auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  max-width: 276px;
+}
+
+.nabtab__link {
+  text-decoration: underline;
+}
+
+/* aboutproject */
+
+.aboutproject {
+  background-color: white;
+  padding-top: 100px;
+  padding-bottom: 110px;
+}
+
+.aboutproject__title {
+  padding-bottom: 23px;
+  border-bottom: 1px black solid;
+}
+
+.aboutproject__infoblock {
+  margin-top: 70px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.aboutproject__process {
+  margin-top: 110px;
+}
+
+/* infoblock */
+
+.infoblock {
+  max-width: 550px;
+}
+
+.infoblock__subtitle {
+  margin-bottom: 26px;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.infoblock__info {
+  font-size: 14px;
+  line-height: 20px;
+}
+
+/* process */
+
+.process {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+}
+
+.process__week {
+  text-align: center;
+}
+
+.process__title {
+  font-size: 14px;
+  line-height: 17px;
+  padding: 9px 0;
+}
+
+.process__title_color-green {
+  background: #2be080;
+}
+
+.process__title_color-gray {
+  background: #f2f2f2;
+}
+
+.process__info {
+  font-family: Suisse Intl;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #A0A0A0;
+  padding: 14px 0;
 }
