@@ -54,7 +54,7 @@
 }
 
 .header__button_type-login {
-  color: white;
+  color: black;
   background-color: #2be080;
   width: 76px;
   height: 32px;
@@ -62,7 +62,7 @@
 }
 
 .header__button_type-signup {
-  color: black;
+  color: white;
 }
 
 /* promo */
@@ -324,7 +324,7 @@
 
 .portfolio {
   background-color: white;
-  padding-bottom: 125px;
+  padding-bottom: 90px;
 }
 
 .portfolio__header {
@@ -346,7 +346,7 @@
 }
 
 .link-list__element {
-  border-bottom: 1px #e8e8e8 solid;
+  border-bottom: 1px #E6E6E6 solid;
   padding-bottom: 0.6rem;
   display: flex;
   height: 100%;
@@ -354,6 +354,56 @@
   justify-content: space-between;
 }
 
+.link-list__element:last-child {
+  border-bottom: unset;
+}
+
 .link-list__marker {
   height: 1rem;
+}
+
+/*footer */
+
+.footer {
+  background-color: white;
+  padding-top: 80px;
+  padding-bottom: 20px;
+}
+
+.footer__title {
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #a0a0a0;
+  border-bottom: 1px #a0a0a0 solid;
+  padding-bottom: 20px;
+}
+
+.footer__info {
+  margin-top: 20px;
+  display: flex;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  line-height: 16px;
+}
+
+.footer__links {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+  
+}
+
+.footer__link:first-child {
+  margin: 0;
+}
+
+
+.footer__link {
+  margin-left: 20px;
+}
+.footer__year {
+
 }
