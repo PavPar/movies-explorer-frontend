@@ -1,0 +1,14 @@
+.link-list__element {
+  border-bottom: 1px #e6e6e6 solid;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.link-list__element:last-child {
+  border-bottom: unset;
+  margin-bottom: 0;
+}
