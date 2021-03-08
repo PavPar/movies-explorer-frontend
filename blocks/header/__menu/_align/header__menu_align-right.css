@@ -1,0 +1,5 @@
+.header__menu_align-right {
+  margin-left: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
