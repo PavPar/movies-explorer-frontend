@@ -1,8 +1,7 @@
 .page {
   box-sizing: border-box;
-  background: purple;
-  max-width: 1360px; /*!!!!*/
   margin: auto;
+  font-family: Inter,sans-serif;
 }
 
 .page > * {

@@ -1,5 +1,7 @@
 /* normalizer */
 @import url(./normalize.css);
+/*fonts*/
+@import url(./fonts/Inter/inter.css);
 /* main blocks */
 @import url(./blocks/page/page.css);
 @import url(./blocks/header/header.css);
@@ -13,4 +15,3 @@
 @import url(./blocks/portfolio/portfolio.css);
 @import url(./blocks/link-list/link-list.css);
 @import url(./blocks/footer/footer.css);
-/* mods */ 
