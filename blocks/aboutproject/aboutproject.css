@@ -1,3 +1,7 @@
+@import url(./__title/aboutproject__title.css);
+@import url(./__process/aboutproject__process.css);
+@import url(./__infoblock/aboutproject__infoblock.css);
+
 .aboutproject {
   background-color: white;
   padding-top: 100px;
