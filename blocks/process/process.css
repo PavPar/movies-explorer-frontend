@@ -1,3 +1,10 @@
+@import url(./__info/process__info.css);
+@import url(./__title/process__title.css);
+@import url(./__week/process__week.css);
+
+@import url(./__title/_color/process__title_color-gray.css);
+@import url(./__title/_color/process__title_color-green.css);
+
 .process {
   display: grid;
   grid-template-columns: 1fr 4fr;
@@ -7,39 +14,4 @@
   .process {
     grid-template-columns: 1fr 2fr;
   }
-}
-.process__week {
-  text-align: center;
-}
-
-.process__title {
-  font-size: 14px;
-  line-height: 17px;
-  padding: 9px 0;
-}
-
-@media screen and (max-width: 600px) {
-  .process__title {
-    font-size: 11px;
-    line-height: 13px;
-    padding: 11px 0;
-  }
-}
-
-.process__title_color-green {
-  background: #2be080;
-}
-
-.process__title_color-gray {
-  background: #f2f2f2;
-}
-
-.process__info {
-  font-family: Suisse Intl;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 17px;
-  color: #a0a0a0;
-  padding: 14px 0;
 }
