@@ -9,7 +9,7 @@
 @import url(./__menu/_align/header__menu_align-right.css);
 
 .header {
-  background: #073042;
+  background-color: unset;
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;

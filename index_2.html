@@ -10,7 +10,7 @@
 </head>
 
 <body class="page">
-    <header class="header">
+    <!-- <header class="header header_color-blue">
         <img class="header__logo" src="./logo.svg"></img>
         <nav class="header__nav">
             <div class="header__menu header__menu_align-right">
@@ -18,94 +18,112 @@
                 <button class="header__button header__button_type-login">Войти</button>
             </div>
         </nav>
-    </header>
-    <section class="promo">
-        <h1 class="promo__title">Учебный проект студента факультета Веб-разработки.</h1>
-    </section>
-    <section class="navtab">
-        <nav class="navtab__menu">
-            <a class="nabtab__link">О проекте</a>
-            <a class="nabtab__link">Технологии</a>
-            <a class="nabtab__link">Студент</a>
+    </header> -->
+
+    <header class="header">
+        <img class="header__logo" src="./logo.svg"></img>
+        <nav class="header__nav">
+            <div class="header__menu">
+                <p class="header__button">Фильмы</p>
+                <p class="header__button">Сохранённые фильмы</p>
+            </div>
+
+            <div class="header__menu header__menu_align-right">
+                <button class="account-btn">
+                    <p class="account-btn__text">Аккаунт</p>
+                    <img class="account-btn__marker" src="accicon.svg">
+                </button>
+            </div>
         </nav>
-    </section>
-    <section class="aboutproject">
-        <h2 class="aboutproject__title">О проекте</h2>
-        <div class="aboutproject__infoblock">
-            <div class="infoblock">
-                <h3 class="infoblock__subtitle">Дипломный проект включал 5 этапов</h3>
-                <p class="infoblock__info">
-                    Составление плана, работу над бэкендом,
-                    вёрстку, добавление функциональностии финальные доработки.
-                </p>
-            </div>
-            <div class="infoblock">
-                <h3 class="infoblock__subtitle">На выполнение диплома ушло 5 недель</h3>
-                <p class="infoblock__info">У каждого этапа был мягкий и жёсткий дедлайн, которые нужно было соблюдать,
-                    чтобы успешно защититься.</p>
-            </div>
+    </header>
+    <section class="searchform">
+        <form class="searchform__searchbar">
+            <input class="searchform__input" novalidate placeholder="Фильм">
+            <button type="submit" class="searchform__searchbutton"></button>
+        </form>
+        <div class="searchform__option">
+            <p class="searchform__text">Короткометражки</p>
+            <button class="switch">
+                <input class="switch__checkbox" type="checkbox">
+                <div class="switch__bubble"></div>
+            </button>
         </div>
-        <div class="aboutproject__process">
-            <div class="process">
-                <div class="process__week ">
-                    <p class="process__title process__title_color-green">1 неделя</p>
-                    <p class="process__info">Back-end</p>
+    </section>
+    <section class="moviecardlist">
+        <div class="moviecardlist__grid">
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
                 </div>
-                <div class="process__week">
-                    <p class="process__title process__title_color-gray">4 недели</p>
-                    <p class="process__info">Front-end</p>
+            </div>
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="techs">
-        <h2 class="techs__header">Технологии</h2>
-        <h3 class="techs__title">7 технологий</h3>
-        <p class="techs__subtitle">На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.
-        </p>
-        <ul class="techs__list">
-            <li class="techs__tech">HTML</li>
-            <li class="techs__tech">CSS</li>
-            <li class="techs__tech">JS</li>
-            <li class="techs__tech">React</li>
-            <li class="techs__tech">Git</li>
-            <li class="techs__tech">Express.js</li>
-            <li class="techs__tech">mongoDB</li>
-        </ul>
-    </section>
-    <section class="aboutme">
-        <h2 class="aboutme__header">Студент</h2>
-        <div class="aboutme__bio">
-            <img class="aboutme__avatar" src="avatar-temp.jpg">
-            <div class="aboutme__info">
-                <h3 class="aboutme__name">Павел</h3>
-                <p class="aboutme__job">Студент, 21 год</p>
-                <p class="aboutme__desc">
-                Пишет 2 диплома одновременно, при этом обладая знаниями картошки.   
-                </p>
-                <ul class="aboutme__list">
-                    <li class="aboutme__link">Github</li>
-                    <li class="aboutme__link">Facebook</li>
-                </ul>
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
+                </div>
             </div>
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
+                </div>
+            </div>
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
+                </div>
+            </div>
+            <div class="moviecard">
+                <img class="moviecard__thumbnail" src="avatar-temp.jpg">
+                <div class="moviecard__info">
+                    <p class="moviecard__title">Тест</p>
+                    <div class="custom-checkbox">
+                        <input class="custom-checkbox__input" type="checkbox">
+                        <div class="custom-checkbox__buble"></div>
+                    </div>
+                    <p class="moviecard__duration">1hr50min</p>
+                </div>
+            </div>
+            
         </div>
-    </section>
-    <section class="portfolio">
-        <h2 class="portfolio__header">Портфолио</h2>
-        <ul class="link-list">
-            <li class="link-list__element">
-                <p class="link-list__text">Статичный сайт</p>
-                <img class="link-list__marker" src="link-marker.svg">
-            </li>
-            <li class="link-list__element">
-                <p class="link-list__text">Адаптивный сайт сайт</p>
-                <img class="link-list__marker" src="link-marker.svg">
-            </li>
-            <li class="link-list__element">
-                <p class="link-list__text">Одностраничное приложение</p>
-                <img class="link-list__marker" src="link-marker.svg">
-            </li>
-        </ul>
+
+        </div>
+        <div class="moviecardlist__more">
+            <button class="moviecardlist__btnmore">Ещё</button>
+        </div>
     </section>
     <footer class="footer">
         <h2 class="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h2>
