@@ -1,0 +1,12 @@
+@import url(./__marker/account-btn__marker.css);
+@import url(./__text/account-btn__text.css);
+
+.account-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
+  background: none;
+  grid-column: 1 / -1;
+  padding: 0;
+}
