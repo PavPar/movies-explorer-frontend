@@ -10,20 +10,32 @@
 </head>
 
 <body class="page">
-    <header class="header header_type-logo">
+    <header class="header header_loc-auth">
         <img class="header__logo" src="./logo.svg"></img>
     </header>
-    <section class="login">
-        <h2 class="login__title">Привет, Виталий!</h2>
+    <section class="auth">
+        <h2 class="auth__title">Добро пожаловать!</h2>
         <form class="form">
-            <p class="form__fieldname">Имя</p>
-            <input class="form__input">
-            <p class="form__fieldname">Почта</p>
-            <input class="form__input">
+            <div class="form__field">
+                <p class="form__fieldname">Имя</p>
+                <input class="form__input">
+                <p class="form__errorfield"></p>
+            </div>
+            <div class="form__field">
+                <p class="form__fieldname">E-mail</p>
+                <input class="form__input">
+                <p class="form__errorfield"></p>
+            </div>
+            <div class="form__field">
+                <p class="form__fieldname">Пароль</p>
+                <input class="form__input">
+                <p class="form__errorfield"></p>
+            </div>
         </form>
-        <div class="form__controlls">
-            <button class="form__btn form__btn_action-submit">Редактировать</button>
-            <button class="form__btn form__btn_action-redirect">Выйти из аккаунта</button>
+        <div class="auth__controlls">
+            <button class="auth__btn auth__btn_action-submit">Зарегестрироваться</button>
+            <p class="auth__text">Уже зарегистрированы?</p>
+            <button class="auth__btn auth__btn_action-redirect">Войти</button>
         </div>
     </section>
 </body>
