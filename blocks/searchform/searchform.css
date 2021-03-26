@@ -2,6 +2,8 @@
 @import url(./__searchbar/searchform__searchbar.css);
 @import url(./__searchbutton/searchform__searchbutton.css);
 @import url(./__option/searchform__option.css);
+@import url(./__text/searchform__text.css);
+@import url(./__breakline/searchform__breakline.css);
 
 .searchform {
   display: flex;
@@ -11,6 +13,8 @@
   padding-bottom: 94px;
   font-size: 13px;
   line-height: 18px;
+  position: relative;
+  box-sizing: border-box;
 }
 
 @media screen and (max-width: 1024px) {
