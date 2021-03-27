@@ -1,7 +1,11 @@
 .page {
   box-sizing: border-box;
   margin: auto;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
+  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .page > * {
