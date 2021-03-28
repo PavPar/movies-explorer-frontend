@@ -1,7 +1,9 @@
 /* normalizer */
 @import url(./normalize.css);
+
 /*fonts*/
 @import url(./fonts/Inter/inter.css);
+
 /* main blocks */
 @import url(./blocks/page/page.css);
 @import url(./blocks/header/header.css);
@@ -15,6 +17,7 @@
 @import url(./blocks/portfolio/portfolio.css);
 @import url(./blocks/link-list/link-list.css);
 @import url(./blocks/footer/footer.css);
+
 /*mods*/
 @import url(./blocks/header/_color/header_color-blue.css);
 
@@ -27,209 +30,12 @@
 @import url(./blocks/searchform/searchform.css);
 @import url(./blocks/switch/switch.css);
 
-/* profile */
-
+/* register,login */
 @import url(./blocks/profile/profile.css);
+@import url(./blocks/auth/auth.css);
+@import url(./blocks/form/form.css);
+@import url(./blocks/auth/__btn/_action/auth__btn_action-redirect.css);
+@import url(./blocks/auth/__btn/_action/auth__btn_action-submit.css);
 
-/* login */
-
-.auth {
-  max-width: 396px;
-  width: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 80vh;
-  max-height: 560px;
-  box-sizing: border-box;
-  padding: 0;
-}
-
-@media screen and (max-width: 600px) {
-  .auth {
-    margin-top: 56px;
-    padding: 0 30px;
-    max-height: 100vh;
-    height: 90vh;
-  }
-}
-
-.auth__logo {
-  align-self: start;
-  transition: align-self 0.5s ease;
-}
-
-@media screen and (max-width: 600px) {
-  .auth__logo {
-    align-self: center;
-  }
-}
-
-.auth__title {
-  margin: 40px 0;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
-  text-align: start;
-  width: 100%;
-}
-
-@media screen and (max-width: 600px) {
-  .auth__title {
-    text-align: center;
-    margin: 50px 0 80px 0;
-  }
-}
-
-.auth__controlls {
-  display: grid;
-  gap: 16px;
-  margin-top: auto;
-  width: 100%;
-  grid-template-columns: 2fr 1fr;
-  font-size: 14px;
-  line-height: 17px;
-}
-
-@media screen and (max-width: 600px) {
-  .auth__controlls {
-    grid-template-columns: 2.5fr 1fr;
-  }
-}
-
-.auth__btn {
-  background: unset;
-  border: none;
-  font-size: inherit;
-  line-height: inherit;
-  padding: 0;
-}
-
-@media screen and (max-width: 600px) {
-  .auth__controlls {
-    font-size: 12px;
-    line-height: 15px;
-  }
-}
-
-.auth__btn_action-submit {
-  width: 100%;
-  background: #3456f3;
-  border-radius: 3px;
-  padding: 15px 0;
-  font-weight: 500;
-  text-align: center;
-  color: #ffffff;
-  grid-column: 1/-1;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.auth__btn_action-redirect {
-  text-align: center;
-  color: #3456f3;
-  justify-self: start;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.auth__text {
-  text-align: center;
-  color: #a0a0a0;
-  justify-self: end;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-.form {
-  width: 100%;
-  display: grid;
-}
-
-.form__field {
-  width: 100%;
-  display: grid;
-  gap: 10px;
-  grid-auto-rows: auto;
-}
-
-.form__fieldname {
-  font-size: 10px;
-  line-height: 12px;
-  color: #a0a0a0;
-}
-
-.form__input {
-  outline: none;
-  background: #f9f9f9;
-  border-radius: 8px;
-  border: none;
-  font-size: 13px;
-  line-height: 16px;
-  padding: 15px;
-  box-sizing: border-box;
-}
-
-.form__errorfield {
-  font-size: 10px;
-  line-height: 12px;
-  color: #ff3055;
-  height: 1em;
-}
-
-/* ================ */
-
-.error {
-  position: relative;
-  align-self: center;
-  margin: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-}
-
-.error__code {
-  font-size: 140px;
-  line-height: 169px;
-  text-align: center;
-}
-
-@media screen and (max-width: 600px) {
-  .error__code {
-    font-size: 80px;
-    line-height: 97px;
-  }
-}
-
-.error__message {
-  font-size: 16px;
-  line-height: 19px;
-  margin-top: 5px;
-}
-
-@media screen and (max-width: 600px) {
-  .error__message {
-    font-size: 12px;
-    line-height: 15px;
-  }
-}
-
-.error__link {
-  position: absolute;
-  font-size: 14px;
-  line-height: 17px;
-  text-align: center;
-  color: #3456f3;
-  background: none;
-  border: none;
-  bottom: -184px;
-}
-
-
-@media screen and (max-width: 600px) {
-  .error__link {
-    top: 52vh;
-  }
-}
+/* error */
+@import url(./blocks/error/error.css);
