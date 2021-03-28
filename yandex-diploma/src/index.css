@@ -39,3 +39,7 @@
 
 /* error */
 @import url(./blocks/error/error.css);
+
+html {
+  scroll-behavior: smooth;
+}
