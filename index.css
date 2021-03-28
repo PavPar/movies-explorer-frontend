@@ -106,9 +106,8 @@
   padding: 0;
 }
 
-
 @media screen and (max-width: 600px) {
-  .auth__controlls{
+  .auth__controlls {
     font-size: 12px;
     line-height: 15px;
   }
@@ -177,4 +176,60 @@
   line-height: 12px;
   color: #ff3055;
   height: 1em;
+}
+
+/* ================ */
+
+.error {
+  position: relative;
+  align-self: center;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.error__code {
+  font-size: 140px;
+  line-height: 169px;
+  text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+  .error__code {
+    font-size: 80px;
+    line-height: 97px;
+  }
+}
+
+.error__message {
+  font-size: 16px;
+  line-height: 19px;
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  .error__message {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.error__link {
+  position: absolute;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #3456f3;
+  background: none;
+  border: none;
+  bottom: -184px;
+}
+
+
+@media screen and (max-width: 600px) {
+  .error__link {
+    top: 52vh;
+  }
 }
