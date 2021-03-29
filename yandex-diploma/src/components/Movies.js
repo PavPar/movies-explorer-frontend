@@ -9,28 +9,29 @@ import MovieCard from './MovieCard';
 
 import logo from '../images/logo.svg'
 import accicon from '../images/accicon.svg'
+import { Link } from 'react-router-dom';
 export default function Movies() {
     const [isMenuOpen, changeMenuState] = useState(false);
 
     function handleMenuClick() {
-        console.log("click!")
+        console.log("click!") 
         changeMenuState(!isMenuOpen);
     }
     return (
         <>
             <Header src={logo} menu={true} onMenuClick={handleMenuClick}>
-                <nav className="header__nav header__nav_adp-menu" style={isMenuOpen ? { visibility: "visible" } : { visibility: "hidden" }}>
+                <nav className="header__nav header__nav_adp-menu">
                     <div className="header__menu header__menu_adp-menu">
-                        <p className="header__button header__element_hidden-lowres">Главная</p>
-                        <p className="header__button header__button_decoration-underline">Фильмы</p>
-                        <p className="header__button">Сохранённые фильмы</p>
+                        <Link to="/" className="header__button header__element_hidden-lowres">Главная</Link>
+                        <Link to="/movies" className="header__button header__button_decoration-underline">Фильмы</Link>
+                        <Link to="/saved-movies" className="header__button">Сохранённые фильмы</Link>
                     </div>
 
                     <div className="header__menu header__menu_align-right" >
-                        <button className="account-btn">
+                        <Link to="/profile" className="account-btn">
                             <p className="account-btn__text">Аккаунт</p>
                             <img className="account-btn__marker" src={accicon} alt="аккаунт"></img>
-                        </button>
+                        </Link >
                     </div>
                     <button className="header__closemenu header__element_hidden-lowres" onClick={handleMenuClick}></button>
 

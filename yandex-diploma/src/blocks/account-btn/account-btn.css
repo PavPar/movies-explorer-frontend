@@ -9,4 +9,6 @@
   background: none;
   grid-column: 1 / -1;
   padding: 0;
+  text-decoration: none;
+  color: black;
 }

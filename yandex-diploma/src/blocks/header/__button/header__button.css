@@ -4,6 +4,9 @@
   font-weight: inherit;
   font-size: inherit;
   line-height: inherit;
+  text-decoration: none;
+  align-self: center;
+  color: black;
 }
 
 @media screen and (max-width: 600px) {
