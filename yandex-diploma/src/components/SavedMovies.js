@@ -9,7 +9,7 @@ import MovieCard from './MovieCard';
 
 import logo from '../images/logo.svg'
 import accicon from '../images/accicon.svg'
-export default function Movies() {
+export default function MediaDeviceInfo() {
     const [isMenuOpen, changeMenuState] = useState(false);
 
     function handleMenuClick() {
@@ -38,11 +38,11 @@ export default function Movies() {
             </Header>
             <SearchForm></SearchForm>
             <MovieCardList>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
             </MovieCardList>
             <Footer></Footer>
         </>

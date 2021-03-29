@@ -3,13 +3,10 @@ import { useState } from 'react';
 
 import Header from './Header'
 import Footer from './Footer';
-import SearchForm from './SearchFrom';
-import MovieCardList from './MovieCardList';
-import MovieCard from './MovieCard';
 
 import logo from '../images/logo.svg'
 import accicon from '../images/accicon.svg'
-export default function Movies() {
+export default function Profile() {
     const [isMenuOpen, changeMenuState] = useState(false);
 
     function handleMenuClick() {
@@ -36,14 +33,20 @@ export default function Movies() {
 
                 </nav>
             </Header>
-            <SearchForm></SearchForm>
-            <MovieCardList>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-               <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-            </MovieCardList>
+            <section className="profile">
+                <h2 className="profile__title">Привет, Виталий!</h2>
+                <form className="profile__form">
+                    <p className="profile__fieldname">Имя</p>
+                    <input className="profile__input"></input>
+                    <hr className="profile__breakline"></hr>
+                    <p className="profile__fieldname">Почта</p>
+                    <input className="profile__input"></input>
+                </form>
+                <div className="profile__controlls">
+                    <button className="profile__btn profile__btn_action-edit">Редактировать</button>
+                    <button className="profile__btn profile__btn_action-logout">Выйти из аккаунта</button>
+                </div>
+            </section>
             <Footer></Footer>
         </>
     )
