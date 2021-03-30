@@ -10,7 +10,7 @@ export default function Header({ type, children, menu = false, onMenuClick }) {
                 <img src={logo} alt="лого"></img>
             </Link>
             {children}
-            { menu && <button class="menubtn" onClick={onMenuClick}> </button>}
+             
         </header>
 
     )

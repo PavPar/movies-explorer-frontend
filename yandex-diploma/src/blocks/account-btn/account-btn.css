@@ -11,4 +11,6 @@
   padding: 0;
   text-decoration: none;
   color: black;
+  max-width: 100px;
+  max-height: 1em;
 }
