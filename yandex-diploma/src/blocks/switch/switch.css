@@ -11,6 +11,6 @@
   padding: 2px;
   width: 36px;
   height: 20px;
-  display: flex;
+  display: grid;
   position: relative;
 }

@@ -44,6 +44,14 @@ html {
   scroll-behavior: smooth;
 }
 
+button{
+  cursor: pointer;
+}
+
+input{
+  outline: none;
+}
+
 .navigation {
   padding-top: 159px;
   padding-bottom: 98px;

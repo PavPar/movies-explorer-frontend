@@ -41,11 +41,11 @@ export default function MediaDeviceInfo() {
             <Navigation isVisible={isMenuOpen} handleClose={()=>handleMenuClick(false)}></Navigation>
             <SearchForm></SearchForm>
             <MovieCardList>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
             </MovieCardList>
             <Footer></Footer>
         </>
