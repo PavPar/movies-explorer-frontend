@@ -5,7 +5,7 @@ import FormField from './FormField'
 
 import logo from '../images/logo.svg'
 
-export default function Login({ handleSubmit, handleRedirect }) {
+export default function Login({ handleSubmit }) {
 
     return (
         <section class="auth">

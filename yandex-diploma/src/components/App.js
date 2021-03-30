@@ -6,8 +6,19 @@ import Profile from './Profile';
 import Register from './Register';
 import Login from './Login'
 import ErrorPage from './ErrorPage.js'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useHistory } from 'react-router-dom'
 function App() {
+  const history = useHistory();
+
+  function handleLogin(){
+    history.push('/movies');
+  }
+
+
+  function handleRegister(){
+    history.push('/signin');
+  }
+
   return (
     <Switch>
       <Route exact path="/">
@@ -23,11 +34,11 @@ function App() {
         <Profile></Profile>
       </Route>
       <Route exact path="/signup">
-        <Register></Register>
+        <Register handleSubmit={handleRegister}></Register>
       </Route>
 
       <Route exact path="/signin">
-        <Login></Login>
+        <Login handleSubmit={handleLogin}></Login>
       </Route>
       <ErrorPage code="404" message="Страница не найдена"></ErrorPage>
     </Switch>
