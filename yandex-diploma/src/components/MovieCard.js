@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function MovieCard({ src, title, duration, isOwn = false }) {
+export default function MovieCardSaved({ src, title, duration}) {
 
     return (
         <div class="moviecard">

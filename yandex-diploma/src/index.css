@@ -39,6 +39,8 @@
 
 /* error */
 @import url(./blocks/error/error.css);
+@import url(./blocks/navigation/navigation.css);
+@import url(./blocks/closebtn/closebtn.css);
 
 html {
   scroll-behavior: smooth;
@@ -51,3 +53,4 @@ button{
 input{
   outline: none;
 }
+

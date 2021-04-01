@@ -5,7 +5,7 @@ import Header from './Header'
 import Footer from './Footer';
 import SearchForm from './SearchFrom';
 import MovieCardList from './MovieCardList';
-import MovieCard from './MovieCard';
+import MovieCard from './MovieCardSaved';
 import Navigation from './Navigation';
 
 import logo from '../images/logo.svg'
@@ -41,11 +41,11 @@ export default function MediaDeviceInfo() {
             <Navigation isVisible={isMenuOpen} handleClose={()=>handleMenuClick(false)}></Navigation>
             <SearchForm></SearchForm>
             <MovieCardList>
-                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard isOwn={true} title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
             </MovieCardList>
             <Footer></Footer>
         </>
