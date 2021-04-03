@@ -1,0 +1,26 @@
+.menubtn {
+  background: center no-repeat;
+  background-image: url(../../images/menuicon.svg);
+  background-color: unset;
+  background-size: 40px 40px;
+  border: none;
+  display: none;
+  width: 44px;
+  height: 44px;
+  position: relative;
+  margin-left: auto;
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .menubtn {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .menubtn {
+    display: block;
+  }
+}
