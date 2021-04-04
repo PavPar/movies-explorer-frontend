@@ -6,7 +6,8 @@ import Footer from './Footer';
 
 import logo from '../images/logo.svg'
 import accicon from '../images/accicon.svg'
-export default function Profile() {
+
+export default function Profile({ userInfo, handleLogout }) {
     const [isMenuOpen, changeMenuState] = useState(false);
 
     function handleMenuClick() {
@@ -34,17 +35,17 @@ export default function Profile() {
                 </nav>
             </Header>
             <section className="profile">
-                <h2 className="profile__title">Привет, Виталий!</h2>
+                <h2 className="profile__title">Привет, {userInfo.name}!</h2>
                 <form className="profile__form">
                     <p className="profile__fieldname">Имя</p>
-                    <input className="profile__input"></input>
+                    <input className="profile__input" value={userInfo.name}></input>
                     <hr className="profile__breakline"></hr>
-                    <p className="profile__fieldname">Почта</p>
-                    <input className="profile__input"></input>
+                    <p className="profile__fieldname" >Почта</p>
+                    <input className="profile__input" value={userInfo.email}></input>
                 </form>
                 <div className="profile__controlls">
                     <button className="profile__btn profile__btn_action-edit">Редактировать</button>
-                    <button className="profile__btn profile__btn_action-logout">Выйти из аккаунта</button>
+                    <button className="profile__btn profile__btn_action-logout" onClick={handleLogout}>Выйти из аккаунта</button>
                 </div>
             </section>
             <Footer></Footer>

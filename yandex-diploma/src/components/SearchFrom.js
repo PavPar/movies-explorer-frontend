@@ -5,7 +5,7 @@ export default function SearchForm() {
     return (
         <section className="searchform">
             <form className="searchform__searchbar">
-                <input className="searchform__input" novalidate placeholder="Фильм"></input>
+                <input className="searchform__input" noValidate placeholder="Фильм"></input>
                 <button type="submit" className="searchform__searchbutton"></button>
             </form>
             <div className="searchform__option">

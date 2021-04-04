@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function Portfolio({marker}) {
-
     return (
         <section className="portfolio">
             <h2 className="portfolio__header">Портфолио</h2>
