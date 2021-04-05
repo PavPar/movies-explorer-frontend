@@ -36,36 +36,36 @@ class MainApi {
 
     //Авторизация пользователя
     authUser({ email, password }) {
-        return this._sendDataToServer("POST","/signin",{
-            email,password
+        return this._sendDataToServer("POST", "/signin", {
+            email, password
         })
-        .then((data) => {
-            localStorage.setItem('jwt', data.token);
-            return data;
-        })
+            .then((data) => {
+                localStorage.setItem('jwt', data.token);
+                return data;
+            })
     }
 
     //Создать пользователя
     createUser({ name, email, password }) {
-        return this._sendDataToServer("POST","/signup",{
-            name,email,password
+        return this._sendDataToServer("POST", "/signup", {
+            name, email, password
         })
     }
 
     //Получить фильмы
     getMovies() {
-        return this._accessServer("GET","/movies")
+        return this._accessServer("GET", "/movies")
     }
 
     //Получить информацию пользователя
-    getUserInfo(){
-        return this._accessServer("GET","/users/me")
+    getUserInfo() {
+        return this._accessServer("GET", "/users/me")
     }
 
     //Изменить информацию пользователя
-    patchUserInfo(){
-        return this._sendDataToServer("PATCH","/users/me", {
-       
+    patchUserInfo({ name, email }) {
+        return this._sendDataToServer("PATCH", "/users/me", {
+            name, email
         })
     }
 

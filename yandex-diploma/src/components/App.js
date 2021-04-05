@@ -15,13 +15,21 @@ import { useState } from 'react';
 function App() {
   const history = useHistory();
 
-
   const [userInfo, setUserInfo] = useState({})
 
   function handleLogin({ email, password }) {
     setLoggedIn(true);
     return MainApi.authUser({ email, password })
-    // history.push('/movies');
+      .then((data) => {
+        MainApi.getUserInfo()
+          .then((res) => {
+            setUserInfo({
+              name: res.name,
+              email: res.email
+            })
+          })
+        return data;
+      })
   }
 
   function handleLogout() {
@@ -29,9 +37,13 @@ function App() {
     setLoggedIn(false);
   }
 
+  function handlePatch({name,email}) {
+    console.log({name,email})
+    return MainApi.patchUserInfo({name,email})
+  }
 
-  function handleRegister() {
-    history.push('/signin');
+  function handleRegister({ name, email, password }) {
+    return MainApi.createUser({ name, email, password })
   }
 
   function handleTokenCheck() {
@@ -64,16 +76,16 @@ function App() {
   return (
     <Switch>
       <Route exact path="/">
-        <Main></Main>
+        <Main isLoggedIn={isLoggedIn}></Main>
       </Route>
       <ProtectedRoute path="/movies" redirectTo="/signup" loggedIn={isLoggedIn}>
-          <Movies></Movies>
+        <Movies isLoggedIn={isLoggedIn}></Movies>
       </ProtectedRoute>
       <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
-          <Profile userInfo={userInfo} handleLogout={handleLogout}></Profile>
+        <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
       </ProtectedRoute>
       <ProtectedRoute path="/saved-movies" redirectTo="/signup" loggedIn={isLoggedIn}>
-        <SavedMovies></SavedMovies>
+        <SavedMovies isLoggedIn={isLoggedIn}></SavedMovies>
       </ProtectedRoute>
 
       <Route exact path="/signup">

@@ -19,14 +19,19 @@ export default function FormField({ type = "", name = "", errorMsg = "", inputRe
                 type={type}
                 {...props.required}
                 ref={inputRef}
+                onClick={
+                    validation
+                }
                 onChange={
                     validation
                 }
                 onBlur={
                     validation
                 }
+                minLength={props.minLength||""}
+                maxLength={props.maxLength||""}
             ></input>
-            <p className="form__errorfield">{errorMsg}</p>
+            <p className="form__errorfield">{state.msg || ""}</p>
         </div>
     )
 }

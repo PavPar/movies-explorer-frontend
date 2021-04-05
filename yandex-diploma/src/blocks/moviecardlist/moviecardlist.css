@@ -5,6 +5,7 @@
 .moviecardlist {
   padding-top: 70px;
   padding-bottom: 80px;
+  min-height: 30vh;
 }
 
 @media screen and (max-width: 600px) {

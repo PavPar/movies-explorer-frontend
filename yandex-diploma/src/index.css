@@ -54,3 +54,6 @@ input{
   outline: none;
 }
 
+.header__nav_theme-white *{
+  color: white;
+}

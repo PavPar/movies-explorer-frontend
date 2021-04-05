@@ -78,6 +78,7 @@ export default function Login({ handleSubmit }) {
                     }
                 }
                 inputRef={passwordRef}
+                minLength="6"
                 >
 
                 </FormField>
