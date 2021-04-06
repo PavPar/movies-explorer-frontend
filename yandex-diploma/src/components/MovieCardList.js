@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function MovieCardList({ children, isMoreBtnVisible=true }) {
+export default function MovieCardList({ children, isMoreBtnVisible = true, handleMore }) {
 
     return (
         <section className="moviecardlist">
@@ -10,7 +10,7 @@ export default function MovieCardList({ children, isMoreBtnVisible=true }) {
 
             {isMoreBtnVisible && (
                 <div className="moviecardlist__more">
-                    <button className="moviecardlist__btnmore">Ещё</button>
+                    <button className="moviecardlist__btnmore" onClick={handleMore}>Ещё</button>
                 </div>
             )}
 

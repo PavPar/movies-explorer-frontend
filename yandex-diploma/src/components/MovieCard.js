@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function MovieCardSaved({ src, title, duration}) {
+export default function MovieCardSaved({ src, title, duration, alt}) {
 
     return (
         <div className="moviecard">
-            <img className="moviecard__thumbnail" src={src} alt="Thumbnail"></img>
+            <img className="moviecard__thumbnail" src={src} alt={alt||"Thumbnail"}></img>
             <div className="moviecard__info">
                 <p className="moviecard__title">{title}</p>
                 <div className="custom-checkbox">
