@@ -17,7 +17,7 @@ export default function FormField({ type = "", name = "", errorMsg = "", inputRe
             <input
                 className="form__input"
                 type={type}
-                {...props.required}
+                required={props.required}
                 ref={inputRef}
                 onClick={
                     validation
@@ -26,6 +26,9 @@ export default function FormField({ type = "", name = "", errorMsg = "", inputRe
                     validation
                 }
                 onBlur={
+                    validation
+                }
+                onFocus={
                     validation
                 }
                 minLength={props.minLength||""}

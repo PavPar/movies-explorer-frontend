@@ -48,6 +48,11 @@ export default function Login({ handleSubmit }) {
 
     }, [isReadyForSubmit])
 
+    useEffect(()=>{
+        ReactTestUtils.Simulate.focus(emailRef.current);
+        ReactTestUtils.Simulate.focus(passwordRef.current);
+    },[])
+
     return (
         <section className="auth">
             <Link to="/" className="auth__logo">

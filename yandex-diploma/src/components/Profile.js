@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react'
 
 import Header from './Header'
@@ -15,7 +16,7 @@ export default function Profile({ userInfo, handleLogout, handlePatch }) {
 
     const [email, setEmail] = useState(userInfo.email);
     const [name, setName] = useState(userInfo.name);
-    const [title,setTitle] = useState("")
+    const [title, setTitle] = useState("")
 
     const [isFormValid, setFormValidity] = React.useState(false);
     const [isEmailValid, setEmailValidity] = React.useState(false);
@@ -36,7 +37,7 @@ export default function Profile({ userInfo, handleLogout, handlePatch }) {
         handlePatch({ email, name })
             .then((res) => {
                 console.log(res);
-                const {name,email} = res;
+                const { name, email } = res;
                 setName(name);
                 setEmail(email);
                 setTitle(name)
@@ -76,6 +77,7 @@ export default function Profile({ userInfo, handleLogout, handlePatch }) {
                                 setName(state.value);
                             }
                         }
+                        required
                     />
                     <hr className="profile__breakline"></hr>
                     <p className="profile__fieldname" >Почта</p>
@@ -90,11 +92,13 @@ export default function Profile({ userInfo, handleLogout, handlePatch }) {
                         }
                         minLength="6"
                         type={email}
+                        required
                     />
 
                 </form>
                 <div className="profile__controlls">
                     <button
+                        style={isFormValid ? { "opacity": "1" } : { "opacity": "0.5" }}
                         className="profile__btn profile__btn_action-edit"
                         onClick={(event) => {
                             event.preventDefault();

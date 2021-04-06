@@ -34,6 +34,12 @@ export default function Register({ handleSubmit }) {
     }, [inputValidity])
 
 
+    useEffect(()=>{
+        ReactTestUtils.Simulate.focus(nameRef.current);
+        ReactTestUtils.Simulate.focus(emailRef.current);
+        ReactTestUtils.Simulate.focus(passwordRef.current);
+    },[])
+
     useEffect(() => {
         setReadyForSubmit(false)
         if (!isFormValid) {

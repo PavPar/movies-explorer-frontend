@@ -9,25 +9,21 @@ import ErrorPage from './ErrorPage.js'
 import ProtectedRoute from './ProtectedRoute'
 
 import MainApi from '../utils/MainApi'
+import MoviesApi from "../utils/MoviesApi"
 
 import { Route, Switch, useHistory } from 'react-router-dom'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 function App() {
   const history = useHistory();
 
   const [userInfo, setUserInfo] = useState({})
+  const [baseUrl,setBaseUrl] = useState("")
 
   function handleLogin({ email, password }) {
     setLoggedIn(true);
     return MainApi.authUser({ email, password })
       .then((data) => {
-        MainApi.getUserInfo()
-          .then((res) => {
-            setUserInfo({
-              name: res.name,
-              email: res.email
-            })
-          })
+        handleTokenCheck()
         return data;
       })
   }
@@ -37,9 +33,9 @@ function App() {
     setLoggedIn(false);
   }
 
-  function handlePatch({name,email}) {
-    console.log({name,email})
-    return MainApi.patchUserInfo({name,email})
+  function handlePatch({ name, email }) {
+    console.log({ name, email })
+    return MainApi.patchUserInfo({ name, email })
   }
 
   function handleRegister({ name, email, password }) {
@@ -71,7 +67,17 @@ function App() {
     return handleTokenCheck()
   });
 
+  function handleSearch(searchReq) {
+    console.log(searchReq)
+    return MoviesApi.getMovies()
+      .then((data) => {
+        setBaseUrl(MoviesApi.getSyncBaseUrl())
+        return data.filter((movie) => {
+          return (movie.nameRU && movie.nameRU.includes(searchReq)) || (movie.nameEN && movie.nameEN.includes(searchReq))
+        })
+      })
 
+  }
 
   return (
     <Switch>
@@ -79,7 +85,7 @@ function App() {
         <Main isLoggedIn={isLoggedIn}></Main>
       </Route>
       <ProtectedRoute path="/movies" redirectTo="/signup" loggedIn={isLoggedIn}>
-        <Movies isLoggedIn={isLoggedIn}></Movies>
+        <Movies isLoggedIn={isLoggedIn} handleSearch={handleSearch} baseUrl={baseUrl}></Movies>
       </ProtectedRoute>
       <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
         <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>

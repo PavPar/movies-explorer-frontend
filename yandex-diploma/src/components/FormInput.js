@@ -19,11 +19,12 @@ export default function FormInput({onValidityChange,inputRef,...props}){
         value={props.value}
         onClick={validation}
         onChange={validation}
-        onBlue={validation}
+        onBlur={validation}
         ref={inputRef}
         type={props.type}
         minLength={props.minLength||""}
         maxLength={props.maxLength||""}
+        required={props.required}
         ></input>
     )
 }

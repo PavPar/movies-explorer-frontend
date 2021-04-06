@@ -1,12 +1,12 @@
 import React from 'react';
 
-export default function SearchForm() {
-
+export default function SearchForm({ handleSubmit ,inputRef}) {
+  
     return (
         <section className="searchform">
-            <form className="searchform__searchbar">
-                <input className="searchform__input" noValidate placeholder="Фильм"></input>
-                <button type="submit" className="searchform__searchbutton"></button>
+            <form className="searchform__searchbar" noValidate>
+                <input className="searchform__input" noValidate placeholder="Фильм" required ref={inputRef}></input>
+                <button type="submit" className="searchform__searchbutton" onClick={handleSubmit}></button>
             </form>
             <div className="searchform__option">
                 <p className="searchform__text">Короткометражки</p>
