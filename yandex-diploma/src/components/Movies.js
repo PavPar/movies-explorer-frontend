@@ -10,19 +10,57 @@ import { useRef, useState } from 'react';
 import useWindowDimensions from '../utils/useWindowDimensions'
 
 import logo from '../images/logo.svg'
-export default function Movies({ isLoggedIn, handleSearch, baseUrl }) {
+export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDelete, baseUrl, getSavedMovies }) {
     const inputRef = useRef();
     const [movies, setMovies] = useState([])
     const [displayMovies, setDisplayMovies] = useState([])
-    const { height, width } = useWindowDimensions();
+    const { width } = useWindowDimensions();
 
-    function handleSubmit(event) {
-        event.preventDefault()
+    function nonShortFilmFunction(movie) {
+        return movie.duration > 40
+    }
+
+    function handleSubmit({ isShortFilm }) {
+        const optionalFiltersFunct = []
+        if (!isShortFilm) {
+            optionalFiltersFunct.push(nonShortFilmFunction)
+        }
+
         if (!inputRef.current.validity.valid) {
             console.log('dumbass')
             return;
         }
-        handleSearch(inputRef.current.value)
+
+        const searchReq = inputRef.current.value;
+
+        Promise.all([
+            handleSearch(inputRef.current.value),
+            getSavedMovies()
+        ])
+            .then((values) => {
+                let [data, saved] = values;
+
+                data = data.filter((movie) => {
+                    let isOk = false
+                    const movieName = movie.nameRU || movie.nameEN;
+                    if (movieName.includes(searchReq)) {
+                        isOk = true;
+                        optionalFiltersFunct.forEach(filterFunc => {
+                            isOk = filterFunc(movie)
+                        });
+                    }
+                    return isOk
+                })
+
+                data.forEach(movie => {
+                    if (saved.find(savedMovie => movie.id + "" === savedMovie.movieID)) {
+                        movie.isOwn = true;
+                        console.log(movie)
+                    }
+                })
+
+                return data
+            })
             .then((data) => {
                 setDisplayMovies(getMoreMovies(data))
                 setMovies(data)
@@ -67,17 +105,35 @@ export default function Movies({ isLoggedIn, handleSearch, baseUrl }) {
         setShowMoreBtn(movies.length > 0)
     }, [movies.length])
 
+    function nullFixer(key, value) {
+        return (value == null) ? "неизвестно" : value
+    }
+
+    function saveMovie(cardData) {
+        // return handleSave
+        console.log(cardData)
+        return handleSave(cardData)
+    }
+
+    function deleteMovie(cardData) {
+        console.log(cardData)
+        return handleDelete(cardData)
+    }
     return (
         <>
             <Header src={logo} menu={true}>
                 <HeaderNav isLoggedIn={isLoggedIn} />
             </Header>
             <SearchForm handleSubmit={handleSubmit} inputRef={inputRef}></SearchForm>
-            <MovieCardList isMoreBtnVisible={showMoreBtn} handleMore={() => {
-                setDisplayMovies(displayMovies.concat(getMoreMovies(movies)))
-            }}>
+            <MovieCardList
+                isMoreBtnVisible={showMoreBtn}
+                handleMore={() => {
+                    setDisplayMovies(displayMovies.concat(getMoreMovies(movies)))
+                }}
+
+            >
                 {displayMovies.map((movie) => {
-                    return <MovieCard title={movie.nameRU || movie.nameEN} src={baseUrl + movie.image.url} alt={movie.image.alternativeText} duration={getDuration(movie.duration)}></MovieCard>
+                    return <MovieCard isOwn={movie.isOwn || false} saveMovie={saveMovie} cardData={movie} title={movie.nameRU || movie.nameEN} src={baseUrl + movie.image.url} alt={movie.image.alternativeText} duration={getDuration(movie.duration)}></MovieCard>
                 })}
             </MovieCardList>
             <Footer></Footer>

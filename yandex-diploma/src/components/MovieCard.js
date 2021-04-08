@@ -1,14 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function MovieCardSaved({ src, title, duration, alt}) {
-
+export default function MovieCardSaved({ isOwn = false, src, title, duration, alt, saveMovie, deleteMovie, ...props }) {
+    const cardData = props.cardData
+    const [isSaved, setSaved] = useState(isOwn)
     return (
         <div className="moviecard">
-            <img className="moviecard__thumbnail" src={src} alt={alt||"Thumbnail"}></img>
+            <img className="moviecard__thumbnail" src={src} alt={alt || "Thumbnail"}></img>
             <div className="moviecard__info">
                 <p className="moviecard__title">{title}</p>
                 <div className="custom-checkbox">
-                    <input className="custom-checkbox__input" type="checkbox"></input>
+                    <input onClick={() => {
+                        if (isSaved) {
+                            deleteMovie(cardData)
+                                .then(() => {
+                                    setSaved(false)
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
+                        } else {
+                            saveMovie(cardData)
+                                .then(() => {
+                                    setSaved(true)
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
+                        }
+                    }}
+                        className="custom-checkbox__input"
+                        type="checkbox"
+                        defaultChecked={isSaved}
+                    ></input>
                     <div className="custom-checkbox__bubble"></div>
                 </div>
                 <p className="moviecard__duration">{duration}</p>

@@ -17,7 +17,7 @@ function App() {
   const history = useHistory();
 
   const [userInfo, setUserInfo] = useState({})
-  const [baseUrl,setBaseUrl] = useState("")
+  const [baseUrl, setBaseUrl] = useState("")
 
   function handleLogin({ email, password }) {
     setLoggedIn(true);
@@ -72,11 +72,55 @@ function App() {
     return MoviesApi.getMovies()
       .then((data) => {
         setBaseUrl(MoviesApi.getSyncBaseUrl())
-        return data.filter((movie) => {
-          return (movie.nameRU && movie.nameRU.includes(searchReq)) || (movie.nameEN && movie.nameEN.includes(searchReq))
-        })
+        return data
       })
 
+  }
+
+  function nullFixer(value) {
+    return (value == null) ? "неизвестно" : value
+  }
+
+  function handleMovieSave(cardData) {
+    Object.keys(cardData).forEach(key=>{
+      cardData[key] = nullFixer(cardData[key]);
+    })
+    
+    const {
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image,
+      trailerLink,
+      nameRU,
+      nameEN,
+      id,
+    } = cardData
+
+    
+    return MainApi.saveMovie({
+      country,
+      director,
+      duration,
+      year,
+      description,
+      image: MoviesApi.getSyncBaseUrl() + image.url,
+      trailer: trailerLink,
+      nameRU,
+      nameEN,
+      thumbnail: MoviesApi.getSyncBaseUrl() + image.url,
+      movieID: id + "",
+    })
+  }
+
+  function handleMovieDelete(cardData) {
+    return MainApi.deleteMovie(cardData.id)
+  }
+
+  function getSavedMovies() {
+    return MainApi.getSavedMovies()
   }
 
   return (
@@ -85,7 +129,14 @@ function App() {
         <Main isLoggedIn={isLoggedIn}></Main>
       </Route>
       <ProtectedRoute path="/movies" redirectTo="/signup" loggedIn={isLoggedIn}>
-        <Movies isLoggedIn={isLoggedIn} handleSearch={handleSearch} baseUrl={baseUrl}></Movies>
+        <Movies
+          isLoggedIn={isLoggedIn}
+          handleSearch={handleSearch}
+          baseUrl={baseUrl}
+          handleSave={handleMovieSave}
+          handleDelete={handleMovieDelete}
+          getSavedMovies={getSavedMovies}
+        />
       </ProtectedRoute>
       <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
         <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
