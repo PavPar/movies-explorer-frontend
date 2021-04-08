@@ -105,13 +105,11 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
         setShowMoreBtn(movies.length > 0)
     }, [movies.length])
 
-    function nullFixer(key, value) {
-        return (value == null) ? "неизвестно" : value
-    }
 
     function saveMovie(cardData) {
         // return handleSave
         console.log(cardData)
+
         return handleSave(cardData)
     }
 
@@ -133,7 +131,7 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
 
             >
                 {displayMovies.map((movie) => {
-                    return <MovieCard isOwn={movie.isOwn || false} saveMovie={saveMovie} cardData={movie} title={movie.nameRU || movie.nameEN} src={baseUrl + movie.image.url} alt={movie.image.alternativeText} duration={getDuration(movie.duration)}></MovieCard>
+                    return <MovieCard isOwn={movie.isOwn || false} saveMovie={saveMovie} deleteMovie={deleteMovie} cardData={movie} title={movie.nameRU || movie.nameEN} src={baseUrl + movie.image.url} alt={movie.image.alternativeText} duration={getDuration(movie.duration)}></MovieCard>
                 })}
             </MovieCardList>
             <Footer></Footer>

@@ -30,7 +30,7 @@ export default function MovieCardSaved({ isOwn = false, src, title, duration, al
                     }}
                         className="custom-checkbox__input"
                         type="checkbox"
-                        defaultChecked={isSaved}
+                        checked={isSaved}
                     ></input>
                     <div className="custom-checkbox__bubble"></div>
                 </div>

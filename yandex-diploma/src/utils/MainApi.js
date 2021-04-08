@@ -101,7 +101,7 @@ class MainApi {
     }
 
     deleteMovie(movieID){
-        return this._sendDataToServer("POST", "/movies/"+movieID)
+        return this._sendDataToServer("DELETE", "/movies/"+movieID)
     }
 
 //Проверка токена
