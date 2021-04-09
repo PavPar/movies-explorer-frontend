@@ -11,7 +11,7 @@ export default function MovieCardSaved({ isOwn = false, src, title, duration, al
                 <div className="custom-checkbox">
                     <input onClick={() => {
                         if (isSaved) {
-                            deleteMovie(cardData)
+                            deleteMovie(cardData.id)
                                 .then(() => {
                                     setSaved(false)
                                 })
@@ -30,6 +30,7 @@ export default function MovieCardSaved({ isOwn = false, src, title, duration, al
                     }}
                         className="custom-checkbox__input"
                         type="checkbox"
+                        readOnly
                         checked={isSaved}
                     ></input>
                     <div className="custom-checkbox__bubble"></div>

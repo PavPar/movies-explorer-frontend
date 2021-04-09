@@ -21,7 +21,13 @@ export default function SearchForm({ handleSubmit, inputRef }) {
             <div className="searchform__option">
                 <p className="searchform__text">Короткометражки</p>
                 <button className="switch">
-                    <input className="switch__checkbox" type="checkbox" onClick={() => { setShortFilmStat(!isShortFilm) }}></input>
+                    <input
+                        className="switch__checkbox"
+                        type="checkbox"
+                        onClick={() => {
+                            setShortFilmStat(!isShortFilm)
+                        }}
+                         />
                     <div className="switch__bubble"></div>
                 </button>
             </div>

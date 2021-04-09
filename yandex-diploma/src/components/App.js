@@ -12,12 +12,11 @@ import MainApi from '../utils/MainApi'
 import MoviesApi from "../utils/MoviesApi"
 
 import { Route, Switch, useHistory } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 function App() {
   const history = useHistory();
 
   const [userInfo, setUserInfo] = useState({})
-  const [baseUrl, setBaseUrl] = useState("")
 
   function handleLogin({ email, password }) {
     setLoggedIn(true);
@@ -67,25 +66,17 @@ function App() {
     return handleTokenCheck()
   });
 
-  function handleSearch(searchReq) {
-    console.log(searchReq)
-    return MoviesApi.getMovies()
-      .then((data) => {
-        setBaseUrl(MoviesApi.getSyncBaseUrl())
-        return data
-      })
-
-  }
-
   function nullFixer(value) {
-    return (value == null) ? "неизвестно" : value
+    return (value == null || value == "") ? "неизвестно" : value
   }
 
   function handleMovieSave(cardData) {
-    Object.keys(cardData).forEach(key=>{
+    Object.keys(cardData).forEach(key => {
       cardData[key] = nullFixer(cardData[key]);
     })
-    
+
+    console.log(cardData);
+
     const {
       country,
       director,
@@ -99,29 +90,47 @@ function App() {
       id,
     } = cardData
 
-    
+
     return MainApi.saveMovie({
       country,
       director,
       duration,
       year,
       description,
-      image: MoviesApi.getSyncBaseUrl() + image.url,
+      image: image.url,
       trailer: trailerLink,
       nameRU,
       nameEN,
-      thumbnail: MoviesApi.getSyncBaseUrl() + image.url,
+      thumbnail: image.url,
       movieID: id + "",
     })
   }
 
-  function handleMovieDelete(cardData) {
-    return MainApi.deleteMovie(cardData.id)
+  function handleMovieDelete(id) {
+    return MainApi.deleteMovie(id)
   }
 
   function getSavedMovies() {
     return MainApi.getSavedMovies()
   }
+
+
+  const [movies, setMovies] = useState([])
+
+  useEffect(() => {
+    MoviesApi.getMovies()
+      .then((data) => {
+        data.forEach(movie => {
+          if (movie.image !== null) {
+            movie.image.url = MoviesApi.getSyncBaseUrl() + movie.image.url
+          }
+        })
+        setMovies(data);
+      })
+      .catch((err) => [
+        console.log(err)
+      ])
+  }, [])
 
   return (
     <Switch>
@@ -131,18 +140,21 @@ function App() {
       <ProtectedRoute path="/movies" redirectTo="/signup" loggedIn={isLoggedIn}>
         <Movies
           isLoggedIn={isLoggedIn}
-          handleSearch={handleSearch}
-          baseUrl={baseUrl}
           handleSave={handleMovieSave}
           handleDelete={handleMovieDelete}
           getSavedMovies={getSavedMovies}
+          defaultMovies={movies}
         />
       </ProtectedRoute>
       <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
         <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
       </ProtectedRoute>
       <ProtectedRoute path="/saved-movies" redirectTo="/signup" loggedIn={isLoggedIn}>
-        <SavedMovies isLoggedIn={isLoggedIn}></SavedMovies>
+        <SavedMovies
+          isLoggedIn={isLoggedIn}
+          getSavedMovies={getSavedMovies}
+          handleDelete={handleMovieDelete}
+        />
       </ProtectedRoute>
 
       <Route exact path="/signup">

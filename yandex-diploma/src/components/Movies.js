@@ -10,7 +10,7 @@ import { useRef, useState } from 'react';
 import useWindowDimensions from '../utils/useWindowDimensions'
 
 import logo from '../images/logo.svg'
-export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDelete, baseUrl, getSavedMovies }) {
+export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDelete, getSavedMovies }) {
     const inputRef = useRef();
     const [movies, setMovies] = useState([])
     const [displayMovies, setDisplayMovies] = useState([])
@@ -33,13 +33,11 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
 
         const searchReq = inputRef.current.value;
 
-        Promise.all([
-            handleSearch(inputRef.current.value),
-            getSavedMovies()
-        ])
-            .then((values) => {
-                let [data, saved] = values;
 
+        getSavedMovies()
+            .then((saved) => {
+                let data = defaultMovies;
+                console.log(data)
                 data = data.filter((movie) => {
                     let isOk = false
                     const movieName = movie.nameRU || movie.nameEN;
@@ -86,15 +84,6 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
         return cardsOnWidth[step]
     }
 
-    // function divideArray(movies, step) {
-    //     let result = []
-    //     for (let i = 0; i < movies.length; i += step) {
-    //         console.log(movies.length, i, i + step)
-    //         result.push(movies.slice(i, i + step))
-    //     }
-    //     return result
-    // }
-
     function getMoreMovies(movies) {
         return movies.splice(0, getStep(width))
     }
@@ -107,9 +96,7 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
 
 
     function saveMovie(cardData) {
-        // return handleSave
         console.log(cardData)
-
         return handleSave(cardData)
     }
 
@@ -131,7 +118,16 @@ export default function Movies({ isLoggedIn, handleSearch, handleSave, handleDel
 
             >
                 {displayMovies.map((movie) => {
-                    return <MovieCard isOwn={movie.isOwn || false} saveMovie={saveMovie} deleteMovie={deleteMovie} cardData={movie} title={movie.nameRU || movie.nameEN} src={baseUrl + movie.image.url} alt={movie.image.alternativeText} duration={getDuration(movie.duration)}></MovieCard>
+                    return <MovieCard
+                        isOwn={movie.isOwn || false}
+                        saveMovie={saveMovie}
+                        deleteMovie={deleteMovie}
+                        cardData={movie}
+                        title={movie.nameRU || movie.nameEN}
+                        src={movie.image.url}
+                        alt={movie.nameRU || movie.nameEN}
+                        duration={getDuration(movie.duration)}
+                    />
                 })}
             </MovieCardList>
             <Footer></Footer>
