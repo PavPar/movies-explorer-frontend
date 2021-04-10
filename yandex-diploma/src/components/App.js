@@ -10,11 +10,13 @@ import ProtectedRoute from './ProtectedRoute'
 
 import MainApi from '../utils/MainApi'
 import MoviesApi from "../utils/MoviesApi"
+import userContext from './context/UserContext';
 
 import { Route, Switch, useHistory } from 'react-router-dom'
-import { useEffect, useState, createContext } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 function App() {
   const history = useHistory();
+
 
   const [userInfo, setUserInfo] = useState({})
 
@@ -132,6 +134,8 @@ function App() {
       ])
   }, [])
 
+
+
   return (
     <Switch>
       <Route exact path="/">
@@ -147,7 +151,9 @@ function App() {
         />
       </ProtectedRoute>
       <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
-        <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
+        <userContext.Provider value={userInfo}>
+          <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
+        </userContext.Provider>
       </ProtectedRoute>
       <ProtectedRoute path="/saved-movies" redirectTo="/signup" loggedIn={isLoggedIn}>
         <SavedMovies

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react'
+import React, { useContext } from 'react'
 
 import Header from './Header'
 import Footer from './Footer';
@@ -9,10 +9,13 @@ import FormInput from './FormInput';
 
 import logo from '../images/logo.svg'
 import { useState, useEffect, useRef } from 'react';
+import userContext from './context/UserContext';
 
-export default function Profile({ userInfo, handleLogout, handlePatch }) {
+export default function Profile({handleLogout, handlePatch }) {
     const emailRef = useRef()
     const nameRef = useRef()
+
+    const userInfo = useContext(userContext);
 
     const [email, setEmail] = useState(userInfo.email);
     const [name, setName] = useState(userInfo.name);
