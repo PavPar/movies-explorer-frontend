@@ -16,8 +16,6 @@ import { Route, Switch, useHistory } from 'react-router-dom'
 import { useEffect, useState, createContext, useContext } from 'react';
 function App() {
   const history = useHistory();
-
-
   const [userInfo, setUserInfo] = useState({})
 
   function handleLogin({ email, password }) {
@@ -77,8 +75,6 @@ function App() {
       cardData[key] = nullFixer(cardData[key]);
     })
 
-    console.log(cardData);
-
     const {
       country,
       director,
@@ -115,7 +111,6 @@ function App() {
   function getSavedMovies() {
     return MainApi.getSavedMovies()
   }
-
 
   const [movies, setMovies] = useState([])
 

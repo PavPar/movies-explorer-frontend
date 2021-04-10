@@ -5,6 +5,7 @@ import Footer from './Footer';
 import SearchForm from './SearchFrom';
 import MovieCardList from './MovieCardList';
 import HeaderNav from './HeaderNav'
+import InfoTooltip from './InfoTooltip'
 
 import logo from '../images/logo.svg'
 import MovieCardSaved from './MovieCardSaved';
@@ -55,7 +56,16 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
             })
             .catch((err) => {
                 console.log(err)
+                setAuthStatus(false)
+                setStatusPopupOpen(true)
             })
+    }
+
+    const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
+    const [isAuthOk, setAuthStatus] = React.useState(false);
+
+    function closeAllPopups() {
+        setStatusPopupOpen(false);
     }
 
     return (
@@ -76,6 +86,12 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
                 })}
 
             </MovieCardList>
+            <InfoTooltip 
+                     onClose={closeAllPopups}
+                     isOpen={StatusPopupOpen}
+                     isOk={isAuthOk}
+                     msgText={isAuthOk ? 'Запрос прошел успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            ></InfoTooltip>
             <Footer></Footer>
         </>
     )

@@ -6,6 +6,7 @@ import Footer from './Footer';
 import HeaderNav from './HeaderNav'
 import ReactTestUtils from 'react-dom/test-utils';
 import FormInput from './FormInput';
+import InfoTooltip from './InfoTooltip'
 
 import logo from '../images/logo.svg'
 import { useState, useEffect, useRef } from 'react';
@@ -44,11 +45,13 @@ export default function Profile({handleLogout, handlePatch }) {
                 setName(name);
                 setEmail(email);
                 setTitle(name)
+                setAuthStatus(true)
+                setStatusPopupOpen(true)
             })
             .catch((err) => {
                 console.log(err)
-                // setPopupMsg(statusErrMsg[err.status] || "Возникла неизвестная ошибка")
-                // setStatusPopupOpen(true)
+                setAuthStatus(false)
+                setStatusPopupOpen(true)
             })
         setFormValidity(false)
 
@@ -62,6 +65,14 @@ export default function Profile({handleLogout, handlePatch }) {
         ReactTestUtils.Simulate.change(emailRef.current);
         ReactTestUtils.Simulate.change(nameRef.current);
     }, [userInfo])
+
+    const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
+    const [isAuthOk, setAuthStatus] = React.useState(false);
+
+    function closeAllPopups() {
+        setStatusPopupOpen(false);
+    }
+
     return (
         <>
             <Header src={logo} menu={true} >
@@ -113,6 +124,12 @@ export default function Profile({handleLogout, handlePatch }) {
                     <button className="profile__btn profile__btn_action-logout" onClick={handleLogout}>Выйти из аккаунта</button>
                 </div>
             </section>
+            <InfoTooltip 
+                     onClose={closeAllPopups}
+                     isOpen={StatusPopupOpen}
+                     isOk={isAuthOk}
+                     msgText={isAuthOk ? 'Изменение прошло успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            ></InfoTooltip>
             <Footer></Footer>
         </>
     )

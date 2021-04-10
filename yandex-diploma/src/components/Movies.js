@@ -6,10 +6,13 @@ import SearchForm from './SearchFrom';
 import MovieCardList from './MovieCardList';
 import MovieCard from './MovieCard';
 import HeaderNav from './HeaderNav'
+import InfoTooltip from './InfoTooltip'
+
 import { useRef, useState } from 'react';
 import useWindowDimensions from '../utils/useWindowDimensions'
 
 import logo from '../images/logo.svg'
+import err from '../images/err.svg'
 export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDelete, getSavedMovies }) {
     const inputRef = useRef();
     const [movies, setMovies] = useState([])
@@ -41,21 +44,33 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                 data = data.filter((movie) => {
                     let isOk = false
                     const movieName = movie.nameRU || movie.nameEN;
-                    if (movieName.includes(searchReq)) {
+                    if (movieName.toUpperCase().includes(searchReq.toUpperCase())) {
                         isOk = true;
                         optionalFiltersFunct.forEach(filterFunc => {
                             isOk = filterFunc(movie)
                         });
                     }
+
+                    if (!movie.image || !movie.duration) {
+                        isOk = false;
+                    }
+                    
                     return isOk
                 })
 
                 data.forEach(movie => {
                     if (saved.find(savedMovie => movie.id + "" === savedMovie.movieID)) {
                         movie.isOwn = true;
-                        console.log(movie)
                     }
                 })
+                
+                data.forEach(movie => {
+                    Object.keys(movie).forEach(key => {
+                        movie[key] = nullFixer(movie[key]);
+                    })
+                })
+
+              
 
                 return data
             })
@@ -65,6 +80,8 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
             })
             .catch((err) => {
                 console.log(err)
+                setAuthStatus(false)
+                setStatusPopupOpen(true)
             })
     }
 
@@ -80,7 +97,7 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
             "0": 5
         }
 
-        const step = Object.keys(cardsOnWidth).filter((x) => x < width).sort((a, b) => b - a)[0];
+        const step = Object.keys(cardsOnWidth).filter((x) => x < width).sort((a, b) => b - a)[0];//magic
         return cardsOnWidth[step]
     }
 
@@ -104,6 +121,19 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
         console.log(cardData)
         return handleDelete(cardData)
     }
+
+    function nullFixer(value) {
+        return (value == null || value == "") ? "неизвестно" : value
+    }
+
+    const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
+    const [isAuthOk, setAuthStatus] = React.useState(false);
+
+    function closeAllPopups() {
+        setStatusPopupOpen(false);
+    }
+
+
     return (
         <>
             <Header src={logo} menu={true}>
@@ -114,23 +144,32 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                 isMoreBtnVisible={showMoreBtn}
                 handleMore={() => {
                     setDisplayMovies(displayMovies.concat(getMoreMovies(movies)))
+                    console.log(displayMovies.length)
                 }}
 
             >
                 {displayMovies.map((movie) => {
+
                     return <MovieCard
                         isOwn={movie.isOwn || false}
                         saveMovie={saveMovie}
                         deleteMovie={deleteMovie}
                         cardData={movie}
                         title={movie.nameRU || movie.nameEN}
-                        src={movie.image.url}
+                        src={movie.image.url || err}
                         alt={movie.nameRU || movie.nameEN}
                         duration={getDuration(movie.duration)}
                     />
                 })}
             </MovieCardList>
             <Footer></Footer>
+            <InfoTooltip
+                onClose={closeAllPopups}
+                isOpen={StatusPopupOpen}
+                isOk={isAuthOk}
+                msgText={isAuthOk ? 'Запрос прошел успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            ></InfoTooltip>
+
         </>
     )
 }

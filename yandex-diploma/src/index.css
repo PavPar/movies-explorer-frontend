@@ -41,7 +41,7 @@
 @import url(./blocks/error/error.css);
 @import url(./blocks/navigation/navigation.css);
 @import url(./blocks/closebtn/closebtn.css);
-
+@import url(./blocks/popup/popup.css);
 html {
   scroll-behavior: smooth;
 }
