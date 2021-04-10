@@ -167,7 +167,7 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                 onClose={closeAllPopups}
                 isOpen={StatusPopupOpen}
                 isOk={isAuthOk}
-                msgText={isAuthOk ? 'Запрос прошел успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+                msgText={isAuthOk ? 'Запрос прошел успешно!' : 'Что-то пошло не так! Попробуйте позже.'}
             ></InfoTooltip>
 
         </>

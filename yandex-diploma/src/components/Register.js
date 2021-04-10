@@ -36,10 +36,15 @@ export default function Register({ handleSubmit }) {
 
 
     useEffect(() => {
-        ReactTestUtils.Simulate.focus(nameRef.current);
-        ReactTestUtils.Simulate.focus(emailRef.current);
-        ReactTestUtils.Simulate.focus(passwordRef.current);
+        const timer = setTimeout(() => {
+            ReactTestUtils.Simulate.focus(nameRef.current);
+            ReactTestUtils.Simulate.focus(emailRef.current);
+            ReactTestUtils.Simulate.focus(passwordRef.current);
+            console.log("timeoutcalled");
+        }, 500)
+        return () => clearTimeout(timer)
     }, [])
+
 
     useEffect(() => {
         setReadyForSubmit(false)
@@ -116,6 +121,7 @@ export default function Register({ handleSubmit }) {
                 <div className="auth__controlls">
                     <button
                         className="auth__btn auth__btn_action-submit"
+                        style={isFormValid ? { "opacity": "1" } :{ "opacity": "0.5" }}
                         onClick={(event) => {
                             event.preventDefault();
                             ReactTestUtils.Simulate.change(emailRef.current);

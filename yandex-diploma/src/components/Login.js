@@ -27,14 +27,18 @@ export default function Login({ handleSubmit }) {
 
     useEffect(() => {
         setFormValidity(!inputValidity.some((input) => !input));
+        console.log('called validity check')
     }, [inputValidity])
 
-
     useEffect(() => {
+        console.log("activated")
         setReadyForSubmit(false)
-        if (!isFormValid) {
+
+        if (inputValidity.some((input) => !input)) {
+            console.log("invalid")
             return
         }
+
         handleSubmit({ email, password })
             .then((res) => {
                 console.log(res);
@@ -49,9 +53,14 @@ export default function Login({ handleSubmit }) {
 
     }, [isReadyForSubmit])
 
+    //Hardcode, but it works ¯\_(ツ)_/¯
     useEffect(() => {
-        ReactTestUtils.Simulate.focus(emailRef.current);
-        ReactTestUtils.Simulate.focus(passwordRef.current);
+        const timer = setTimeout(()=>{
+            ReactTestUtils.Simulate.change(emailRef.current);
+            ReactTestUtils.Simulate.change(passwordRef.current);
+            console.log("timeoutcalled");            
+        },500)
+        return () => clearTimeout(timer)
     }, [])
 
     const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
@@ -89,6 +98,7 @@ export default function Login({ handleSubmit }) {
                             (state) => {
                                 setPasswordValidity(state.valid);
                                 setPassword(state.value);
+                                console.log(state.value)
                             }
                         }
                         inputRef={passwordRef}
@@ -101,8 +111,9 @@ export default function Login({ handleSubmit }) {
                     <button
                         className="auth__btn auth__btn_action-submit"
                         disabled={!isFormValid}
-                        style={isFormValid ? { "backgroundColor": "green" } : { "backgroundColor": "red" }}
+                        style={isFormValid ? { "opacity": "1" } :{ "opacity": "0.5" }}
                         onClick={(event) => {
+                            console.log('called')
                             event.preventDefault();
                             ReactTestUtils.Simulate.change(emailRef.current);
                             ReactTestUtils.Simulate.change(passwordRef.current);
