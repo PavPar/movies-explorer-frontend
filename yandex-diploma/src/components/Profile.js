@@ -12,17 +12,17 @@ import logo from '../images/logo.svg'
 import { useState, useEffect, useRef } from 'react';
 import userContext from './context/UserContext';
 
-export default function Profile({handleLogout, handlePatch }) {
+export default function Profile({ handleLogout, handlePatch }) {
     const emailRef = useRef()
     const nameRef = useRef()
 
     const userInfo = useContext(userContext);
 
-    const [email, setEmail] = useState(userInfo.email);
-    const [name, setName] = useState(userInfo.name);
-    const [title, setTitle] = useState("")
+    const [email, setEmail] = useState("...");
+    const [name, setName] = useState("...");
+    const [title, setTitle] = useState("...")
 
-    const [isFormValid, setFormValidity] = React.useState(false);
+    const [isFormValid, setFormValidity] = React.useState(true);
     const [isEmailValid, setEmailValidity] = React.useState(false);
     const [isNameValid, setNameValidity] = React.useState(false);
     const [isReadyForSubmit, setReadyForSubmit] = React.useState(false)
@@ -34,6 +34,9 @@ export default function Profile({handleLogout, handlePatch }) {
     }, [inputValidity])
 
     useEffect(() => {
+        if (!isReadyForSubmit) {
+            return;
+        }
         setReadyForSubmit(false)
         if (!isFormValid) {
             return
@@ -44,7 +47,7 @@ export default function Profile({handleLogout, handlePatch }) {
                 const { name, email } = res;
                 setName(name);
                 setEmail(email);
-                setTitle(name)
+                setTitle(name);
                 setAuthStatus(true)
                 setStatusPopupOpen(true)
             })
@@ -62,16 +65,28 @@ export default function Profile({handleLogout, handlePatch }) {
         emailRef.current.value = userInfo.email
         setName(userInfo.name);
         setEmail(userInfo.email);
+        setTitle(userInfo.name);
         ReactTestUtils.Simulate.change(emailRef.current);
         ReactTestUtils.Simulate.change(nameRef.current);
     }, [userInfo])
 
     const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
-    const [isAuthOk, setAuthStatus] = React.useState(false);
+    const [isAuthOk, setAuthStatus] = React.useState(true);
 
     function closeAllPopups() {
         setStatusPopupOpen(false);
     }
+
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            ReactTestUtils.Simulate.change(nameRef.current);
+            ReactTestUtils.Simulate.change(emailRef.current);
+            console.log("timeoutcalled");
+        }, 500)
+        return () => clearTimeout(timer)
+    }, [])
+
 
     return (
         <>
@@ -92,6 +107,7 @@ export default function Profile({handleLogout, handlePatch }) {
                             }
                         }
                         required
+                        defaultValue="..."
                     />
                     <hr className="profile__breakline"></hr>
                     <p className="profile__fieldname" >Почта</p>
@@ -104,9 +120,9 @@ export default function Profile({handleLogout, handlePatch }) {
                                 setEmail(state.value);
                             }
                         }
-                        minLength="6"
                         type={email}
                         required
+                        defaultValue="..."
                     />
 
                 </form>
@@ -124,11 +140,11 @@ export default function Profile({handleLogout, handlePatch }) {
                     <button className="profile__btn profile__btn_action-logout" onClick={handleLogout}>Выйти из аккаунта</button>
                 </div>
             </section>
-            <InfoTooltip 
-                     onClose={closeAllPopups}
-                     isOpen={StatusPopupOpen}
-                     isOk={isAuthOk}
-                     msgText={isAuthOk ? 'Изменение прошло успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            <InfoTooltip
+                onClose={closeAllPopups}
+                isOpen={StatusPopupOpen}
+                isOk={isAuthOk}
+                msgText={isAuthOk ? 'Изменение прошло успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
             ></InfoTooltip>
             <Footer></Footer>
         </>

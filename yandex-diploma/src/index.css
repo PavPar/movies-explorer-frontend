@@ -46,14 +46,29 @@ html {
   scroll-behavior: smooth;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-input{
+input {
   outline: none;
 }
 
-.header__nav_theme-white *{
+.header__nav_theme-white * {
   color: white;
+}
+
+.moviecardlist__notfound {
+  position: absolute;
+  top: 50%;
+  font-size: 50px;
+  color: gray;
+}
+
+
+@media screen and (max-width: 600px) {
+  .moviecardlist__notfound {
+    font-size: 25px;
+  }
+  
 }

@@ -12,6 +12,8 @@ import MovieCardSaved from './MovieCardSaved';
 
 export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }) {
     const [displayMovies, setDisplayMovies] = useState([])
+    const [displayMessage, setDisplayMessage] = useState(false);
+
     const inputRef = useRef();
 
     function getDuration(duration = 0) {
@@ -29,7 +31,6 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
         }
 
         if (!inputRef.current.validity.valid) {
-            console.log('dumbass')
             return;
         }
 
@@ -52,6 +53,11 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
                 return data
             })
             .then((data) => {
+                if (data.length === 0) {
+                    setDisplayMessage(true)
+                }else{
+                    setDisplayMessage(false)
+                }
                 setDisplayMovies(data)
             })
             .catch((err) => {
@@ -81,6 +87,7 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
             <MovieCardList
                 isMoreBtnVisible={false}
             >
+                <div style={displayMessage ? { "visibility": "visible" } : {"visibility": "hidden"}} className="moviecardlist__notfound">Ничего не найдено</div>
                 {displayMovies.map((movie) => {
                     return <MovieCardSaved deleteMovie={handleDelete} cardData={movie} title={movie.nameRU || movie.nameEN} src={movie.image} duration={getDuration(movie.duration)}></MovieCardSaved>
                 })}

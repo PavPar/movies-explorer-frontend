@@ -16,6 +16,7 @@ import err from '../images/err.svg'
 export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDelete, getSavedMovies }) {
     const inputRef = useRef();
     const [movies, setMovies] = useState([])
+    const [displayMessage, setDisplayMessage] = useState(false);
     const [displayMovies, setDisplayMovies] = useState([])
     const { width } = useWindowDimensions();
 
@@ -54,7 +55,7 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                     if (!movie.image || !movie.duration) {
                         isOk = false;
                     }
-                    
+
                     return isOk
                 })
 
@@ -63,18 +64,23 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                         movie.isOwn = true;
                     }
                 })
-                
+
                 data.forEach(movie => {
                     Object.keys(movie).forEach(key => {
                         movie[key] = nullFixer(movie[key]);
                     })
                 })
 
-              
+
 
                 return data
             })
             .then((data) => {
+                if (data.length === 0) {
+                    setDisplayMessage(true)
+                }else{
+                    setDisplayMessage(false)
+                }
                 setDisplayMovies(getMoreMovies(data))
                 setMovies(data)
             })
@@ -148,6 +154,7 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                 }}
 
             >
+                <div style={displayMessage ? { "visibility": "visible" } : {"visibility": "hidden"}} className="moviecardlist__notfound">Ничего не найдено</div>
                 {displayMovies.map((movie) => {
 
                     return <MovieCard

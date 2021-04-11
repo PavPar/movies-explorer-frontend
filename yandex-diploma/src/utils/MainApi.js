@@ -96,25 +96,25 @@ class MainApi {
         })
     }
 
-    getSavedMovies(){
-        return this._accessServer("GET","/movies")
+    getSavedMovies() {
+        return this._accessServer("GET", "/movies")
     }
 
-    deleteMovie(movieID){
-        return this._sendDataToServer("DELETE", "/movies/"+movieID)
+    deleteMovie(movieID) {
+        return this._sendDataToServer("DELETE", "/movies/" + movieID)
     }
 
-//Проверка токена
-checkToken(token) {
-    return this._accessServer("GET", "/users/me", {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${token}`
-    })
-}
-//Ресет токена пользователя
-resetToken() {
-    this._options.headers.authorization = `Bearer ${localStorage.getItem('jwt')}`
-}
+    //Проверка токена
+    checkToken(token) {
+        return this._accessServer("GET", "/users/me", {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`
+        })
+    }
+    //Ресет токена пользователя
+    resetToken() {
+        this._options.headers.authorization = `Bearer ${localStorage.getItem('jwt')}`
+    }
 }
 
 export default new MainApi({

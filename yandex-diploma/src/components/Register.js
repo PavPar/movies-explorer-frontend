@@ -10,6 +10,7 @@ import InfoTooltip from './InfoTooltip'
 
 export default function Register({ handleSubmit }) {
     const history = useHistory();
+    const [showErrMsg, setShowErrMsg] = useState(false);
 
     const [name, setName] = useState();
     const [email, setEmail] = useState();
@@ -92,6 +93,11 @@ export default function Register({ handleSubmit }) {
                             }
                         }
                         inputRef={nameRef}
+                        onClick={() => {
+                            setShowErrMsg(true)
+                        }}
+                        displayErrMsg={showErrMsg}
+
                     />
                     <FormField
                         name="E-mail"
@@ -104,6 +110,10 @@ export default function Register({ handleSubmit }) {
                             }
                         }
                         inputRef={emailRef}
+                        displayErrMsg={showErrMsg}
+                        onClick={() => {
+                            setShowErrMsg(true)
+                        }}
                     />
                     <FormField
                         name="Пароль"
@@ -116,12 +126,17 @@ export default function Register({ handleSubmit }) {
                             }
                         }
                         inputRef={passwordRef}
+                        onClick={() => {
+                            setShowErrMsg(true)
+                        }}
+                        displayErrMsg={showErrMsg}
+
                     />
                 </form>
                 <div className="auth__controlls">
                     <button
                         className="auth__btn auth__btn_action-submit"
-                        style={isFormValid ? { "opacity": "1" } :{ "opacity": "0.5" }}
+                        style={isFormValid ? { "opacity": "1" } : { "opacity": "0.5" }}
                         onClick={(event) => {
                             event.preventDefault();
                             ReactTestUtils.Simulate.change(emailRef.current);

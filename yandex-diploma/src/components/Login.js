@@ -21,27 +21,24 @@ export default function Login({ handleSubmit }) {
     const [isReadyForSubmit, setReadyForSubmit] = React.useState(false)
 
     const inputValidity = [isEmailValid, isPasswordValid]
+    const [showErrMsg, setShowErrMsg] = useState(false);
 
     const emailRef = useRef()
     const passwordRef = useRef()
 
     useEffect(() => {
         setFormValidity(!inputValidity.some((input) => !input));
-        console.log('called validity check')
     }, [inputValidity])
 
     useEffect(() => {
-        console.log("activated")
         setReadyForSubmit(false)
 
         if (inputValidity.some((input) => !input)) {
-            console.log("invalid")
             return
         }
 
         handleSubmit({ email, password })
             .then((res) => {
-                console.log(res);
                 history.push('/movies')
             })
             .catch((err) => {
@@ -53,13 +50,12 @@ export default function Login({ handleSubmit }) {
 
     }, [isReadyForSubmit])
 
-    //Hardcode, but it works ¯\_(ツ)_/¯
+    //Hardcode, but it works ¯\_(ツ)_/¯ autocomplete fix
     useEffect(() => {
-        const timer = setTimeout(()=>{
+        const timer = setTimeout(() => {
             ReactTestUtils.Simulate.change(emailRef.current);
             ReactTestUtils.Simulate.change(passwordRef.current);
-            console.log("timeoutcalled");            
-        },500)
+        }, 500)
         return () => clearTimeout(timer)
     }, [])
 
@@ -88,7 +84,11 @@ export default function Login({ handleSubmit }) {
                                 setEmail(state.value);
                             }
                         }
+                        onClick={() => {
+                            setShowErrMsg(true)
+                        }}
                         inputRef={emailRef}
+                        displayErrMsg={showErrMsg}
                     ></FormField>
                     <FormField
                         name="Пароль"
@@ -101,8 +101,12 @@ export default function Login({ handleSubmit }) {
                                 console.log(state.value)
                             }
                         }
+                        onClick={() => {
+                            setShowErrMsg(true)
+                        }}
                         inputRef={passwordRef}
-                        minLength="6"
+                        minLength="1"
+                        displayErrMsg={showErrMsg}
                     >
 
                     </FormField>
@@ -111,7 +115,7 @@ export default function Login({ handleSubmit }) {
                     <button
                         className="auth__btn auth__btn_action-submit"
                         disabled={!isFormValid}
-                        style={isFormValid ? { "opacity": "1" } :{ "opacity": "0.5" }}
+                        style={isFormValid ? { "opacity": "1" } : { "opacity": "0.5" }}
                         onClick={(event) => {
                             console.log('called')
                             event.preventDefault();

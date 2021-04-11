@@ -1,30 +1,34 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import ReactTestUtils from 'react-dom/test-utils';
 
-export default function FormInput({onValidityChange,inputRef,...props}){
+export default function FormInput({ onValidityChange, inputRef, ...props }) {
 
     const [state, setState] = React.useState('');
 
-    const validation = () => {
+    const validation = (event) => {
         setState({
-            valid: inputRef.current.validity.valid,
-            msg: inputRef.current.validationMessage,
-            value: inputRef.current.value
+            valid: event.target.validity.valid,
+            msg: event.targetvalidationMessage,
+            value: event.target.value
         });
         onValidityChange(state);
     }
 
-    return(
-        <input 
-        className={props.className} 
-        value={props.value}
-        onClick={validation}
-        onChange={validation}
-        onBlur={validation}
-        ref={inputRef}
-        type={props.type}
-        minLength={props.minLength||""}
-        maxLength={props.maxLength||""}
-        required={props.required}
+
+
+    return (
+        <input
+            className={props.className}
+            defaultValue={props.defaultValue}
+            onClick={validation}
+            onChange={validation}
+            onBlur={validation}
+            onFocus={validation}
+            ref={inputRef}
+            type={props.type}
+            minLength={props.minLength || ""}
+            maxLength={props.maxLength || ""}
+            required={props.required}
         ></input>
     )
 }

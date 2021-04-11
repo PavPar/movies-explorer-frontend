@@ -1,16 +1,22 @@
 import React from 'react';
+import ReactTestUtils from 'react-dom/test-utils';
 
-export default function FormField({ type = "", name = "", errorMsg = "", inputRef, onValidityChange, ...props }) {
+export default function FormField({displayErrMsg=true, type = "", name = "", errorMsg = "", inputRef, onValidityChange, ...props }) {
     const [state, setState] = React.useState('');
 
-    const validation = () => {
+    const validation = (event) => {
         setState({
-            valid: inputRef.current.validity.valid,
-            msg: inputRef.current.validationMessage,
-            value: inputRef.current.value
+            valid: event.target.validity.valid,
+            msg: event.target.validationMessage,
+            value: event.target.value
         });
         onValidityChange(state);
     }
+
+    // const timer = setTimeout(()=>{
+    //     ReactTestUtils.Simulate.change(event.target);
+    // },1)
+    // return () => clearTimeout(timer)
     return (
         <div className="form__field">
             <p className="form__fieldname">{name}</p>
@@ -20,7 +26,7 @@ export default function FormField({ type = "", name = "", errorMsg = "", inputRe
                 required={props.required}
                 ref={inputRef}
                 onClick={
-                    validation
+                    props.onClick
                 }
                 onChange={
                     validation
@@ -31,10 +37,10 @@ export default function FormField({ type = "", name = "", errorMsg = "", inputRe
                 onFocus={
                     validation
                 }
-                minLength={props.minLength||""}
-                maxLength={props.maxLength||""}
+                minLength={props.minLength || ""}
+                maxLength={props.maxLength || ""}
             ></input>
-            <p className="form__errorfield">{state.msg || ""}</p>
+            <p className="form__errorfield">{displayErrMsg && (state.msg || "")}</p>
         </div>
     )
 }

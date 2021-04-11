@@ -13,7 +13,7 @@ import MoviesApi from "../utils/MoviesApi"
 import userContext from './context/UserContext';
 
 import { Route, Switch, useHistory } from 'react-router-dom'
-import { useEffect, useState, createContext, useContext } from 'react';
+import { useEffect, useState} from 'react';
 function App() {
   const history = useHistory();
   const [userInfo, setUserInfo] = useState({})
@@ -44,7 +44,7 @@ function App() {
   function handleTokenCheck() {
     if (localStorage.getItem('jwt')) {
       const jwt = localStorage.getItem('jwt');
-
+      MainApi.resetToken();
       return MainApi.checkToken(jwt)
         .then((res) => {
           setUserInfo({
