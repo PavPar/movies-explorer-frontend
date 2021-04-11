@@ -41,7 +41,6 @@ export default function Register({ handleSubmit }) {
             ReactTestUtils.Simulate.focus(nameRef.current);
             ReactTestUtils.Simulate.focus(emailRef.current);
             ReactTestUtils.Simulate.focus(passwordRef.current);
-            console.log("timeoutcalled");
         }, 500)
         return () => clearTimeout(timer)
     }, [])
@@ -54,7 +53,6 @@ export default function Register({ handleSubmit }) {
         }
         handleSubmit({ name, email, password })
             .then((res) => {
-                console.log(res);
                 setAuthStatus(true)
                 setStatusPopupOpen(true)
                 // history.push('/signin')

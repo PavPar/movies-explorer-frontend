@@ -98,7 +98,6 @@ export default function Login({ handleSubmit }) {
                             (state) => {
                                 setPasswordValidity(state.valid);
                                 setPassword(state.value);
-                                console.log(state.value)
                             }
                         }
                         onClick={() => {
@@ -117,7 +116,6 @@ export default function Login({ handleSubmit }) {
                         disabled={!isFormValid}
                         style={isFormValid ? { "opacity": "1" } : { "opacity": "0.5" }}
                         onClick={(event) => {
-                            console.log('called')
                             event.preventDefault();
                             ReactTestUtils.Simulate.change(emailRef.current);
                             ReactTestUtils.Simulate.change(passwordRef.current);

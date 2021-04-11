@@ -70,5 +70,15 @@ input {
   .moviecardlist__notfound {
     font-size: 25px;
   }
-  
+}
+
+.menubtn__hr{
+  border:none;
+  background: black;
+  height:3px;
+  margin:0;
+}
+
+.menubtn_color-white > hr {
+  background-color: white;
 }

@@ -33,7 +33,6 @@ function App() {
   }
 
   function handlePatch({ name, email }) {
-    console.log({ name, email })
     return MainApi.patchUserInfo({ name, email })
   }
 

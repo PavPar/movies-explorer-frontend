@@ -43,7 +43,6 @@ export default function Profile({ handleLogout, handlePatch }) {
         }
         handlePatch({ email, name })
             .then((res) => {
-                console.log(res);
                 const { name, email } = res;
                 setName(name);
                 setEmail(email);
@@ -82,7 +81,6 @@ export default function Profile({ handleLogout, handlePatch }) {
         const timer = setTimeout(() => {
             ReactTestUtils.Simulate.change(nameRef.current);
             ReactTestUtils.Simulate.change(emailRef.current);
-            console.log("timeoutcalled");
         }, 500)
         return () => clearTimeout(timer)
     }, [])

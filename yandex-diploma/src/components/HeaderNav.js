@@ -4,7 +4,7 @@ import accicon from '../images/accicon.svg'
 import Navigation from './Navigation';
 import { useState } from 'react';
 
-export default function HeaderNav({ isLoggedIn,...props }) {
+export default function HeaderNav({ isLoggedIn, ...props }) {
     const [isMenuOpen, changeMenuState] = useState(false);
 
     function handleMenuClick(state) {
@@ -26,7 +26,12 @@ export default function HeaderNav({ isLoggedIn,...props }) {
                             <img className="account-btn__marker" src={accicon} alt="аккаунт"></img>
                         </Link >
                     </div>
-                    <button className="menubtn" onClick={handleMenuClick}> </button>
+                    <button class={`menubtn ${props.menumod}`} onClick={handleMenuClick} >
+                        <hr class="menubtn__hr"></hr>
+                        <hr class="menubtn__hr"></hr>
+                        <hr class="menubtn__hr"></hr>
+                    </button>
+                    {/* <button className="menubtn" onClick={handleMenuClick}> </button> */}
                 </nav>
                 <Navigation isVisible={isMenuOpen} handleClose={() => handleMenuClick(false)}></Navigation>
             </>

@@ -31,7 +31,6 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
         }
 
         if (!inputRef.current.validity.valid) {
-            console.log('dumbass')
             return;
         }
 
@@ -41,7 +40,6 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
         getSavedMovies()
             .then((saved) => {
                 let data = defaultMovies;
-                console.log(data)
                 data = data.filter((movie) => {
                     let isOk = false
                     const movieName = movie.nameRU || movie.nameEN;
@@ -119,12 +117,10 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
 
 
     function saveMovie(cardData) {
-        console.log(cardData)
         return handleSave(cardData)
     }
 
     function deleteMovie(cardData) {
-        console.log(cardData)
         return handleDelete(cardData)
     }
 
@@ -150,7 +146,6 @@ export default function Movies({ isLoggedIn, defaultMovies, handleSave, handleDe
                 isMoreBtnVisible={showMoreBtn}
                 handleMore={() => {
                     setDisplayMovies(displayMovies.concat(getMoreMovies(movies)))
-                    console.log(displayMovies.length)
                 }}
 
             >

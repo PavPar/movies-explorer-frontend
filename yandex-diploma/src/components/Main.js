@@ -17,7 +17,7 @@ export default function Main({ isLoggedIn }) {
     return (
         <>
             <Header type="header_color-blue" src={logo}>
-                <HeaderNav isLoggedIn={isLoggedIn} mod={"header__nav_theme-white"}/>
+                <HeaderNav isLoggedIn={isLoggedIn} mod={"header__nav_theme-white"} menumod={"menubtn_color-white"}/>
             </Header>
             <Promo></Promo>
             <NavTab></NavTab>
