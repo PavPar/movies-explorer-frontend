@@ -5,7 +5,7 @@ export default function MovieCardSaved({ isOwn = false, src, title, duration, al
     const [isSaved, setSaved] = useState(isOwn)
     return (
         <div className="moviecard">
-            <img className="moviecard__thumbnail" src={src} alt={alt || "Thumbnail"}></img>
+            <img className="moviecard__thumbnail" src={src} alt={alt || "Thumbnail"} draggable="false"></img>
             <div className="moviecard__info">
                 <p className="moviecard__title">{title}</p>
                 <div className="custom-checkbox">

@@ -8,6 +8,7 @@ import InfoTooltip from './InfoTooltip'
 import FormField from './FormField'
 
 import logo from '../images/logo.svg'
+import { authMSG } from '../configs/messages';
 
 export default function Login({ handleSubmit }) {
     const history = useHistory();
@@ -129,7 +130,7 @@ export default function Login({ handleSubmit }) {
                 onClose={closeAllPopups}
                 isOpen={StatusPopupOpen}
                 isOk={isAuthOk}
-                msgText={isAuthOk ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+                msgText={isAuthOk ? authMSG.ok : authMSG.unknownErr}
             ></InfoTooltip>
         </>
     )

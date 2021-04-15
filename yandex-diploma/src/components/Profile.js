@@ -12,6 +12,8 @@ import logo from '../images/logo.svg'
 import { useState, useEffect, useRef } from 'react';
 import userContext from './context/UserContext';
 
+import { profileMSG } from '../configs/messages';
+
 export default function Profile({ handleLogout, handlePatch }) {
     const emailRef = useRef()
     const nameRef = useRef()
@@ -29,8 +31,13 @@ export default function Profile({ handleLogout, handlePatch }) {
 
     const inputValidity = [isEmailValid, isNameValid]
 
+    function checkInput() {
+        let valueEquality = email !== userInfo.email || name !== userInfo.name
+        return !inputValidity.some((input) => !input) && valueEquality
+    }
+
     useEffect(() => {
-        setFormValidity(!inputValidity.some((input) => !input));
+        setFormValidity(checkInput());
     }, [inputValidity])
 
     useEffect(() => {
@@ -44,11 +51,16 @@ export default function Profile({ handleLogout, handlePatch }) {
         handlePatch({ email, name })
             .then((res) => {
                 const { name, email } = res;
+
                 setName(name);
                 setEmail(email);
                 setTitle(name);
-                setAuthStatus(true)
-                setStatusPopupOpen(true)
+
+                userInfo.name = name;
+                userInfo.email = email;
+
+                setAuthStatus(true);
+                setStatusPopupOpen(true);
             })
             .catch((err) => {
                 console.log(err)
@@ -142,7 +154,7 @@ export default function Profile({ handleLogout, handlePatch }) {
                 onClose={closeAllPopups}
                 isOpen={StatusPopupOpen}
                 isOk={isAuthOk}
-                msgText={isAuthOk ? 'Изменение прошло успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+                msgText={isAuthOk ? profileMSG.ok : profileMSG.unknownErr}
             ></InfoTooltip>
             <Footer></Footer>
         </>

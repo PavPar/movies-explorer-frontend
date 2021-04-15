@@ -7,15 +7,15 @@ export default function Portfolio({marker}) {
             <ul className="link-list">
                 <li className="link-list__element">
                     <p className="link-list__text">Статичный сайт</p>
-                    <img className="link-list__marker" src={marker} alt="маркер"></img>
+                    <a href="https://github.com/yandex-praktikum/how-to-learn" className="link-list__marker"></a>
                 </li>
                 <li className="link-list__element">
-                    <p className="link-list__text">Адаптивный сайт сайт</p>
-                    <img className="link-list__marker" src={marker} alt="маркер"></img>
+                    <p className="link-list__text">Адаптивный сайт</p>
+                    <a href="https://github.com/PavPar/mesto" className="link-list__marker"></a>
                 </li>
                 <li className="link-list__element">
                     <p className="link-list__text">Одностраничное приложение</p>
-                    <img className="link-list__marker" src={marker} alt="маркер"></img>
+                    <a href="https://github.com/PavPar/react-mesto-auth" className="link-list__marker"></a>
                 </li>
             </ul>
         </section>

@@ -6,15 +6,16 @@ export default function MovieCardSaved({ src, title, duration, deleteMovie, ...p
     return (
 
         <div className="moviecard" style={isDeleted? { "display": 'none' }:{}}>
-            <img className="moviecard__thumbnail" src={src} alt="Thumbnail"></img>
+            <img className="moviecard__thumbnail" src={src} alt="Thumbnail" draggable="false"></img>
             <div className="moviecard__info">
                 <p className="moviecard__title">{title}</p>
                 <button
                     className="closebtn"
                     onClick={() => {
-                        deleteMovie(cardData.movieID)
-                            .then(() => {
+                        return deleteMovie(cardData.movieID)
+                            .then((data) => {
                                 setDeleted(true)
+                                console.log(data)
                             })
                             .catch((err) => {
                                 console.log(err)

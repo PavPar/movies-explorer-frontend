@@ -2,6 +2,7 @@
 @import url(./__marker/link-list__marker.css);
 
 .link-list {
+  display: block;
   margin: 0;
   padding: 0;
   list-style-type: none;

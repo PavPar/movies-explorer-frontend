@@ -6,14 +6,17 @@ import SearchForm from './SearchFrom';
 import MovieCardList from './MovieCardList';
 import HeaderNav from './HeaderNav'
 import InfoTooltip from './InfoTooltip'
+import { movieMSG } from '../configs/messages';
+import { moviesFilterParameters, localStorageNames } from "../configs/constants";
 
 import logo from '../images/logo.svg'
 import MovieCardSaved from './MovieCardSaved';
 
-export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }) {
+export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete, movies }) {
     const [displayMovies, setDisplayMovies] = useState([])
     const [displayMessage, setDisplayMessage] = useState(false);
-
+    const [displayPreLoader, setPreLoader] = useState(false);
+    const [popupMessage, setPopupMessage] = useState(movieMSG.unknownErr)
     const inputRef = useRef();
 
     function getDuration(duration = 0) {
@@ -21,8 +24,14 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
     }
 
     function nonShortFilmFunction(movie) {
-        return movie.duration > 40
+        return movie.duration > moviesFilterParameters.movieLengthThreshold
     }
+
+    useEffect(() => {
+        if (localStorage.getItem(localStorageNames.userSavedMoviesSearch)) {
+            setDisplayMovies(JSON.parse(localStorage.getItem(localStorageNames.userSavedMoviesSearch)))
+        }
+    }, [])
 
     function handleSubmit({ isShortFilm }) {
         const optionalFiltersFunct = []
@@ -31,17 +40,24 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
         }
 
         if (!inputRef.current.validity.valid) {
+            setPopupMessage(movieMSG.noRequestVal)
+            setAuthStatus(false)
+            setStatusPopupOpen(true)
+            console.log("err")
             return;
         }
 
         const searchReq = inputRef.current.value;
+        setDisplayMovies([])
+        setDisplayMessage(false)
+        setPreLoader(true)
 
         getSavedMovies()
             .then((data) => {
                 data = data.filter((movie) => {
                     let isOk = false
                     const movieName = movie.nameRU || movie.nameEN;
-                    if (movieName.includes(searchReq)) {
+                    if (movieName.toUpperCase().includes(searchReq.toUpperCase())) {
                         isOk = true;
                         optionalFiltersFunct.forEach(filterFunc => {
                             isOk = filterFunc(movie)
@@ -55,15 +71,20 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
             .then((data) => {
                 if (data.length === 0) {
                     setDisplayMessage(true)
-                }else{
+                } else {
                     setDisplayMessage(false)
                 }
                 setDisplayMovies(data)
+                localStorage.setItem(localStorageNames.userSavedMoviesSearch, JSON.stringify(data))
             })
             .catch((err) => {
                 console.log(err)
                 setAuthStatus(false)
+                setPopupMessage(movieMSG.unknownErr)
                 setStatusPopupOpen(true)
+            })
+            .finally(() => {
+                setPreLoader(false)
             })
     }
 
@@ -87,17 +108,25 @@ export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete }
             <MovieCardList
                 isMoreBtnVisible={false}
             >
-                <div style={displayMessage ? { "visibility": "visible" } : {"visibility": "hidden"}} className="moviecardlist__notfound">Ничего не найдено</div>
+                <div style={displayMessage ? { "visibility": "visible" } : { "visibility": "hidden" }} className="moviecardlist__notfound">Ничего не найдено</div>
+                <div style={displayPreLoader ? { "visibility": "visible" } : { "visibility": "hidden" }} className="moviecardlist__notfound">Загрузка ...</div>
                 {displayMovies.map((movie) => {
-                    return <MovieCardSaved deleteMovie={handleDelete} cardData={movie} title={movie.nameRU || movie.nameEN} src={movie.image} duration={getDuration(movie.duration)}></MovieCardSaved>
+                    return <MovieCardSaved
+                        key={movie.id}
+                        deleteMovie={handleDelete}
+                        cardData={movie}
+                        title={movie.nameRU || movie.nameEN}
+                        src={movie.image}
+                        duration={getDuration(movie.duration)}
+                    />
                 })}
 
             </MovieCardList>
-            <InfoTooltip 
-                     onClose={closeAllPopups}
-                     isOpen={StatusPopupOpen}
-                     isOk={isAuthOk}
-                     msgText={isAuthOk ? 'Запрос прошел успешно!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+            <InfoTooltip
+                onClose={closeAllPopups}
+                isOpen={StatusPopupOpen}
+                isOk={isAuthOk}
+                msgText={isAuthOk ? movieMSG.ok : popupMessage}
             ></InfoTooltip>
             <Footer></Footer>
         </>

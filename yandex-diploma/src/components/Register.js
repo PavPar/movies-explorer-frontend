@@ -8,7 +8,9 @@ import FormField from './FormField'
 import logo from '../images/logo.svg'
 import InfoTooltip from './InfoTooltip'
 
-export default function Register({ handleSubmit }) {
+import { authMSG } from '../configs/messages';
+
+export default function Register({ handleSubmit, handleAuth }) {
     const history = useHistory();
     const [showErrMsg, setShowErrMsg] = useState(false);
 
@@ -55,7 +57,13 @@ export default function Register({ handleSubmit }) {
             .then((res) => {
                 setAuthStatus(true)
                 setStatusPopupOpen(true)
-                // history.push('/signin')
+                handleAuth({ email, password })
+                    .then((res) => {
+                        history.push('/movies')
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
             })
             .catch((err) => {
                 console.log(err)
@@ -151,7 +159,7 @@ export default function Register({ handleSubmit }) {
                 onClose={closeAllPopups}
                 isOpen={StatusPopupOpen}
                 isOk={isAuthOk}
-                msgText={isAuthOk ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}
+                msgText={isAuthOk ? authMSG.ok : authMSG.unknownErr}
             ></InfoTooltip>
         </>
     )

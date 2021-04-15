@@ -8,14 +8,15 @@ import Login from './Login'
 import ErrorPage from './ErrorPage.js'
 import ProtectedRoute from './ProtectedRoute'
 
+import { localStorageNames } from '../configs/constants';
+
 import MainApi from '../utils/MainApi'
 import MoviesApi from "../utils/MoviesApi"
 import userContext from './context/UserContext';
 
-import { Route, Switch, useHistory } from 'react-router-dom'
-import { useEffect, useState} from 'react';
+import { Route, Switch } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 function App() {
-  const history = useHistory();
   const [userInfo, setUserInfo] = useState({})
 
   function handleLogin({ email, password }) {
@@ -28,7 +29,9 @@ function App() {
   }
 
   function handleLogout() {
-    localStorage.removeItem('jwt')
+    localStorage.removeItem(localStorageNames.token)
+    localStorage.removeItem(localStorageNames.userMoviesSearch)
+    localStorage.removeItem(localStorageNames.userSavedMoviesSearch)
     setLoggedIn(false);
   }
 
@@ -41,8 +44,8 @@ function App() {
   }
 
   function handleTokenCheck() {
-    if (localStorage.getItem('jwt')) {
-      const jwt = localStorage.getItem('jwt');
+    if (localStorage.getItem(localStorageNames.token)) {
+      const jwt = localStorage.getItem(localStorageNames.token);
       MainApi.resetToken();
       return MainApi.checkToken(jwt)
         .then((res) => {
@@ -73,6 +76,16 @@ function App() {
     Object.keys(cardData).forEach(key => {
       cardData[key] = nullFixer(cardData[key]);
     })
+
+    setMovies(movies.filter(movie => {
+      console.log(movie.id, cardData.id, movie.id === cardData.id,movie)
+      if (movie.id === cardData.id) {
+        movie.isOwn = true;
+      }
+      return true;
+    }))
+
+
 
     const {
       country,
@@ -105,6 +118,27 @@ function App() {
 
   function handleMovieDelete(id) {
     return MainApi.deleteMovie(id)
+      .then((data) => {
+        setMovies(movies.filter(movie => {
+          console.log(movie.id, id, movie.id + "" === id + "", typeof movie.id, typeof id)
+          if (movie.id + "" === id + "") {
+            movie.isOwn = false;
+          }
+          return true;
+        }))
+
+        if (localStorage.getItem(localStorageNames.userSavedMoviesSearch)) {
+          const savedData = JSON.parse(localStorage.getItem(localStorageNames.userSavedMoviesSearch))
+
+          const savedDataRes = savedData.filter(movie => {
+            return movie.movieID !== id + ""
+          })
+          localStorage.setItem(localStorageNames.userSavedMoviesSearch, JSON.stringify(savedDataRes))
+        }
+
+
+        return data
+      })
   }
 
   function getSavedMovies() {
@@ -114,20 +148,43 @@ function App() {
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
-    MoviesApi.getMovies()
+    Promise.all([
+      MoviesApi.getMovies(),
+      MainApi.getSavedMovies()
+    ])
       .then((data) => {
-        data.forEach(movie => {
-          if (movie.image !== null) {
-            movie.image.url = MoviesApi.getSyncBaseUrl() + movie.image.url
-          }
-        })
-        setMovies(data);
-      })
-      .catch((err) => [
-        console.log(err)
-      ])
-  }, [])
+        const [movies, saved] = data
 
+        const result = movies.filter((movie) => {
+          let isOk = true
+
+          if (!movie.image || !movie.duration) {
+            return false;
+          }
+
+          Object.keys(movie).forEach(key => {
+            movie[key] = nullFixer(movie[key]);
+          })
+
+          if (movie.image !== null && typeof movie.image === 'object') {
+            movie.image.url = MoviesApi.getSyncBaseUrl() + movie.image.url
+          } else {
+            isOk = false;
+          }
+
+          if (saved.find(savedMovie => movie.id + "" === savedMovie.movieID)) {
+            movie.isOwn = true;
+          }
+
+          return isOk
+        })
+
+        setMovies(result)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [])
 
 
   return (
@@ -135,30 +192,31 @@ function App() {
       <Route exact path="/">
         <Main isLoggedIn={isLoggedIn}></Main>
       </Route>
-      <ProtectedRoute path="/movies" redirectTo="/signup" loggedIn={isLoggedIn}>
+      <ProtectedRoute path="/movies" redirectTo="/" loggedIn={isLoggedIn}>
         <Movies
           isLoggedIn={isLoggedIn}
           handleSave={handleMovieSave}
           handleDelete={handleMovieDelete}
           getSavedMovies={getSavedMovies}
-          defaultMovies={movies}
+          movies={movies}
         />
       </ProtectedRoute>
-      <ProtectedRoute path="/profile" redirectTo="/signup" loggedIn={isLoggedIn}>
+      <ProtectedRoute path="/profile" redirectTo="/" loggedIn={isLoggedIn}>
         <userContext.Provider value={userInfo}>
           <Profile userInfo={userInfo} handleLogout={handleLogout} handlePatch={handlePatch}></Profile>
         </userContext.Provider>
       </ProtectedRoute>
-      <ProtectedRoute path="/saved-movies" redirectTo="/signup" loggedIn={isLoggedIn}>
+      <ProtectedRoute path="/saved-movies" redirectTo="/" loggedIn={isLoggedIn}>
         <SavedMovies
           isLoggedIn={isLoggedIn}
           getSavedMovies={getSavedMovies}
           handleDelete={handleMovieDelete}
+          movies={movies}
         />
       </ProtectedRoute>
 
       <Route exact path="/signup">
-        <Register handleSubmit={handleRegister}></Register>
+        <Register handleSubmit={handleRegister} handleAuth={handleLogin}></Register>
       </Route>
 
       <Route exact path="/signin">
