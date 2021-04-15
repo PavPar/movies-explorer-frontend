@@ -15,7 +15,6 @@ export default function MovieCardSaved({ src, title, duration, deleteMovie, ...p
                         return deleteMovie(cardData.movieID)
                             .then((data) => {
                                 setDeleted(true)
-                                console.log(data)
                             })
                             .catch((err) => {
                                 console.log(err)

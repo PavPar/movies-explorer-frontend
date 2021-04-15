@@ -40,7 +40,6 @@ class MainApi {
             email, password
         })
             .then((data) => {
-                localStorage.setItem('jwt', data.token);
                 return data;
             })
     }
@@ -114,6 +113,10 @@ class MainApi {
     //Ресет токена пользователя
     resetToken() {
         this._options.headers.authorization = `Bearer ${localStorage.getItem('jwt')}`
+    }
+
+    setToken(token){
+        this._options.headers.authorization = `Bearer ${token}`
     }
 }
 

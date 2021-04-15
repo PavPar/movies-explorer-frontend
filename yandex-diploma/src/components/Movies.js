@@ -11,14 +11,11 @@ import InfoTooltip from './InfoTooltip'
 import { useRef, useState } from 'react';
 import useWindowDimensions from '../utils/useWindowDimensions'
 import { movieMSG } from '../configs/messages';
-import { moviesFilterParameters, cardsOnWidth, nullReplacerValue, localStorageNames } from "../configs/constants";
-
-import MainApi from '../utils/MainApi'
-import MoviesApi from "../utils/MoviesApi"
+import { moviesFilterParameters, cardsOnWidth, localStorageNames } from "../configs/constants";
 
 import logo from '../images/logo.svg'
 import err from '../images/err.svg'
-export default function Movies({ isLoggedIn, handleSave, handleDelete, getSavedMovies, movies }) {
+export default function Movies({ isLoggedIn, handleSave, handleDelete, movies }) {
     const inputRef = useRef();
     const [parsedMovies, setParsedMovies] = useState([])
     const [displayMessage, setDisplayMessage] = useState(false);
@@ -31,74 +28,7 @@ export default function Movies({ isLoggedIn, handleSave, handleDelete, getSavedM
         return movie.duration > moviesFilterParameters.movieLengthThreshold;
     }
 
-    // useEffect(() => {
-    //     // if (localStorage.getItem(localStorageNames.movies)) {
-    //     //     setMovies(JSON.parse(localStorage.getItem(localStorageNames.movies)))
-    //     //     return
-    //     // }
-    //     Promise.all([
-    //         MoviesApi.getMovies(),
-    //         MainApi.getSavedMovies()
-    //     ])
-    //         .then((data) => {
-    //             const [movies, saved] = data
-
-    //             const result = movies.filter((movie) => {
-    //                 let isOk = true
-
-    //                 if (!movie.image || !movie.duration) {
-    //                     return false;
-    //                 }
-
-    //                 Object.keys(movie).forEach(key => {
-    //                     movie[key] = nullFixer(movie[key]);
-    //                 })
-
-    //                 if (movie.image !== null && typeof movie.image === 'object') {
-    //                     movie.image.url = MoviesApi.getSyncBaseUrl() + movie.image.url
-    //                 } else {
-    //                     isOk = false;
-    //                 }
-
-    //                 if (saved.find(savedMovie => movie.id + "" === savedMovie.movieID)) {
-    //                     movie.isOwn = true;
-    //                 }
-
-    //                 console.log(movie)
-    //                 return isOk
-    //             })
-
-    //             localStorage.setItem(localStorageNames.movies, JSON.stringify(result));
-    //             setMovies(result)
-    //             console.log(result)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //         })
-    // }, [])
-
-    // useEffect(() => {
-    //     getSavedMovies()
-    //         .then(saved => {
-
-    //             const data = movies.forEach((movie) => {
-    //                 if (saved.find(savedMovie => movie.id + "" === savedMovie.movieID)) {
-    //                     movie.isOwn = true;
-    //                 }
-    //             })
-    //             console.log(data)
-    //             setMovies(data)
-    //         })
-    //         .catch((err) => {
-    //             console.log(err)
-    //             setAuthStatus(false)
-    //             setPopupMessage(movieMSG.unknownErr)
-    //             setStatusPopupOpen(true)
-    //         })
-    // }, [movies])
-
     function handleSubmit({ isShortFilm }) {
-        console.log(movies)
         try {
             const optionalFiltersFunct = []
             if (!isShortFilm) {
@@ -185,11 +115,10 @@ export default function Movies({ isLoggedIn, handleSave, handleDelete, getSavedM
     }
 
     useEffect(() => {
-        if (localStorage.getItem(localStorageNames.userMoviesSearch)) {
+        if (localStorage.getItem(localStorageNames.userMoviesSearch) && movies.length > 0) {
             const data = JSON.parse(localStorage.getItem(localStorageNames.userMoviesSearch))
             data.forEach((backupMovie) => {
                 const updatedMovie = movies.find(movie => {
-                    console.log(backupMovie.id, movie.id, movie.id === backupMovie.id)
                     return movie.id === backupMovie.id
                 })
                 backupMovie.isOwn = updatedMovie.isOwn;

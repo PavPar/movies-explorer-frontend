@@ -4,6 +4,9 @@
 
 .footer__link {
   margin-left: 20px;
+  text-decoration: none;
+  color: black;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {

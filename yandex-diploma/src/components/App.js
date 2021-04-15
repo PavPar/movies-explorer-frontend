@@ -20,9 +20,11 @@ function App() {
   const [userInfo, setUserInfo] = useState({})
 
   function handleLogin({ email, password }) {
-    setLoggedIn(true);
     return MainApi.authUser({ email, password })
       .then((data) => {
+        localStorage.setItem('jwt', data.token);
+        setLoggedIn(true);
+        MainApi.setToken(data.token)
         handleTokenCheck()
         return data;
       })
@@ -46,7 +48,7 @@ function App() {
   function handleTokenCheck() {
     if (localStorage.getItem(localStorageNames.token)) {
       const jwt = localStorage.getItem(localStorageNames.token);
-      MainApi.resetToken();
+      MainApi.setToken(jwt)
       return MainApi.checkToken(jwt)
         .then((res) => {
           setUserInfo({
@@ -78,7 +80,6 @@ function App() {
     })
 
     setMovies(movies.filter(movie => {
-      console.log(movie.id, cardData.id, movie.id === cardData.id,movie)
       if (movie.id === cardData.id) {
         movie.isOwn = true;
       }
@@ -120,7 +121,6 @@ function App() {
     return MainApi.deleteMovie(id)
       .then((data) => {
         setMovies(movies.filter(movie => {
-          console.log(movie.id, id, movie.id + "" === id + "", typeof movie.id, typeof id)
           if (movie.id + "" === id + "") {
             movie.isOwn = false;
           }
@@ -148,6 +148,9 @@ function App() {
   const [movies, setMovies] = useState([])
 
   useEffect(() => {
+    if (!isLoggedIn) {
+      return;
+    }
     Promise.all([
       MoviesApi.getMovies(),
       MainApi.getSavedMovies()
@@ -184,7 +187,7 @@ function App() {
       .catch((err) => {
         console.log(err)
       })
-  }, [])
+  }, [isLoggedIn])
 
 
   return (

@@ -8,9 +8,9 @@ export default function Footer({ marker }) {
             <div className="footer__info">
                 <div className="footer__year">&#169; 2021</div>
                 <ul className="footer__links">
-                    <li className="footer__link">Яндекс.Практикум</li>
-                    <li className="footer__link">Github</li>
-                    <li className="footer__link">Facebook</li>
+                    <a href="https://praktikum.yandex.ru/" className="footer__link">Яндекс.Практикум</a>
+                    <a href="https://github.com/" className="footer__link">Github</a>
+                    <a href="https://vk.com/thatrussiandude" className="footer__link">ВК</a>
                 </ul>
             </div>
         </footer>
