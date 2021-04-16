@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 
 import Header from './Header'
 import Promo from './Promo'
@@ -9,20 +8,16 @@ import Techs from './Techs';
 import AboutMe from './AboutMe';
 import Portfolio from './Portfolio';
 import Footer from './Footer';
+import HeaderNav from './HeaderNav'
 
 import logo from '../images/logo.svg'
 import avatar from '../images/avatar-temp.jpg'
 import marker from '../images/link-marker.svg'
-export default function Main() {
+export default function Main({ isLoggedIn }) {
     return (
         <>
             <Header type="header_color-blue" src={logo}>
-                <nav className="header__nav">
-                    <div className="header__menu header__menu_align-right">
-                        <Link to="/signup" className="header__button header__button_type-signup">Регистрация</Link>
-                        <Link to="/signin" className="header__button header__button_type-login">Войти</Link>
-                    </div>
-                </nav>
+                <HeaderNav isLoggedIn={isLoggedIn} mod={"header__nav_theme-white"} menumod={"menubtn_color-white"}/>
             </Header>
             <Promo></Promo>
             <NavTab></NavTab>

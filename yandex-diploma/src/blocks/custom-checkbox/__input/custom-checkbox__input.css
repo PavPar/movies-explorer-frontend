@@ -11,3 +11,8 @@
 .custom-checkbox__input:checked ~ .custom-checkbox__bubble {
   background-color: #2be080;
 }
+
+
+.custom-checkbox__input:hover ~ .custom-checkbox__bubble {
+  background-color: #2be07f55;
+}

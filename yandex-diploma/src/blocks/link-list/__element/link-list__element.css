@@ -6,6 +6,9 @@
   height: 100%;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
 }
 
 .link-list__element:last-child {

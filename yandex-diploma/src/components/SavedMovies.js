@@ -1,52 +1,133 @@
-import React from 'react'
-import { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react'
 
 import Header from './Header'
 import Footer from './Footer';
 import SearchForm from './SearchFrom';
 import MovieCardList from './MovieCardList';
-import MovieCard from './MovieCardSaved';
-import Navigation from './Navigation';
+import HeaderNav from './HeaderNav'
+import InfoTooltip from './InfoTooltip'
+import { movieMSG } from '../configs/messages';
+import { moviesFilterParameters, localStorageNames } from "../configs/constants";
 
 import logo from '../images/logo.svg'
-import accicon from '../images/accicon.svg'
-import { Link } from 'react-router-dom';
+import MovieCardSaved from './MovieCardSaved';
 
-export default function MediaDeviceInfo() {
-    const [isMenuOpen, changeMenuState] = useState(false);
+export default function SavedMovies({ isLoggedIn, getSavedMovies, handleDelete, movies }) {
+    const [displayMovies, setDisplayMovies] = useState([])
+    const [displayMessage, setDisplayMessage] = useState(false);
+    const [displayPreLoader, setPreLoader] = useState(false);
+    const [popupMessage, setPopupMessage] = useState(movieMSG.unknownErr)
+    const inputRef = useRef();
 
-    function handleMenuClick() {
-        console.log("click!")
-        changeMenuState(!isMenuOpen);
+    function getDuration(duration = 0) {
+        return `${Math.floor(duration / 60)}h${duration % 60}min`
     }
+
+    function nonShortFilmFunction(movie) {
+        return movie.duration > moviesFilterParameters.movieLengthThreshold
+    }
+
+    useEffect(() => {
+        if (localStorage.getItem(localStorageNames.userSavedMoviesSearch)) {
+            setDisplayMovies(JSON.parse(localStorage.getItem(localStorageNames.userSavedMoviesSearch)))
+        }
+    }, [])
+
+    function handleSubmit({ isShortFilm }) {
+        const optionalFiltersFunct = []
+        if (!isShortFilm) {
+            optionalFiltersFunct.push(nonShortFilmFunction)
+        }
+
+        if (!inputRef.current.validity.valid) {
+            setPopupMessage(movieMSG.noRequestVal)
+            setAuthStatus(false)
+            setStatusPopupOpen(true)
+            console.log("err")
+            return;
+        }
+
+        const searchReq = inputRef.current.value;
+        setDisplayMovies([])
+        setDisplayMessage(false)
+        setPreLoader(true)
+
+        getSavedMovies()
+            .then((data) => {
+                data = data.filter((movie) => {
+                    let isOk = false
+                    const movieName = movie.nameRU || movie.nameEN;
+                    if (movieName.toUpperCase().includes(searchReq.toUpperCase())) {
+                        isOk = true;
+                        optionalFiltersFunct.forEach(filterFunc => {
+                            isOk = filterFunc(movie)
+                        });
+                    }
+                    return isOk
+                })
+
+                return data
+            })
+            .then((data) => {
+                if (data.length === 0) {
+                    setDisplayMessage(true)
+                } else {
+                    setDisplayMessage(false)
+                }
+                setDisplayMovies(data)
+                localStorage.setItem(localStorageNames.userSavedMoviesSearch, JSON.stringify(data))
+            })
+            .catch((err) => {
+                console.log(err)
+                setAuthStatus(false)
+                setPopupMessage(movieMSG.unknownErr)
+                setStatusPopupOpen(true)
+            })
+            .finally(() => {
+                setPreLoader(false)
+            })
+    }
+
+    const [StatusPopupOpen, setStatusPopupOpen] = React.useState(false);
+    const [isAuthOk, setAuthStatus] = React.useState(false);
+
+    function closeAllPopups() {
+        setStatusPopupOpen(false);
+    }
+
     return (
         <>
-          <Header src={logo} menu={true} onMenuClick={()=>handleMenuClick(true)}>
-                <nav className="header__nav header__nav_adp-menu">
-                    <div className="header__menu header__menu_adp-menu">
-                        <Link to="/" className="header__button header__element_hidden-lowres">Главная</Link>
-                        <Link to="/movies" className="header__button header__button_decoration-underline">Фильмы</Link>
-                        <Link to="/saved-movies" className="header__button">Сохранённые фильмы</Link>
-                    </div>
-
-                    <div className="header__menu header__menu_align-right" >
-                        <Link to="/profile" className="account-btn">
-                            <p className="account-btn__text">Аккаунт</p>
-                            <img className="account-btn__marker" src={accicon} alt="аккаунт"></img>
-                        </Link >
-                    </div>
-                    <button className="menubtn" onClick={handleMenuClick}> </button>
-                </nav>
+            <Header src={logo} menu={true}>
+                <HeaderNav isLoggedIn={isLoggedIn} />
             </Header>
-            <Navigation isVisible={isMenuOpen} handleClose={()=>handleMenuClick(false)}></Navigation>
-            <SearchForm></SearchForm>
-            <MovieCardList>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
-                <MovieCard title="Тест" src={logo} duration="00h00min"></MovieCard>
+            <SearchForm
+                handleSubmit={handleSubmit}
+                inputRef={inputRef}
+                onSwitchClick={handleSubmit}
+            />
+            <MovieCardList
+                isMoreBtnVisible={false}
+            >
+                <div style={displayMessage ? { "visibility": "visible" } : { "visibility": "hidden" }} className="moviecardlist__notfound">Ничего не найдено</div>
+                <div style={displayPreLoader ? { "visibility": "visible" } : { "visibility": "hidden" }} className="moviecardlist__notfound">Загрузка ...</div>
+                {displayMovies.map((movie) => {
+                    return <MovieCardSaved
+                        key={movie.id}
+                        deleteMovie={handleDelete}
+                        cardData={movie}
+                        title={movie.nameRU || movie.nameEN}
+                        src={movie.image}
+                        duration={getDuration(movie.duration)}
+                    />
+                })}
+
             </MovieCardList>
+            <InfoTooltip
+                onClose={closeAllPopups}
+                isOpen={StatusPopupOpen}
+                isOk={isAuthOk}
+                msgText={isAuthOk ? movieMSG.ok : popupMessage}
+            ></InfoTooltip>
             <Footer></Footer>
         </>
     )

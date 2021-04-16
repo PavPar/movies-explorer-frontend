@@ -14,8 +14,8 @@ export default function AboutMe({avatar}) {
                         Пишет 2 диплома одновременно, при этом обладая знаниями картошки.
                 </p>
                     <ul className="aboutme__list">
-                        <li className="aboutme__link">Github</li>
-                        <li className="aboutme__link">Facebook</li>
+                        <a href="https://github.com/" className="aboutme__link">Github</a>
+                        <a href="https://vk.com/thatrussiandude" className="aboutme__link">ВК</a>
                     </ul>
                 </div>
             </div>

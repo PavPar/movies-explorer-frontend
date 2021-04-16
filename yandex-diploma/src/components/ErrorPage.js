@@ -13,10 +13,10 @@ export default function ErrorPage({ code, message }) {
     }
 
     return (
-        <section class="error">
-            <h1 class="error__code">{code}</h1>
-            <p class="error__message">{message}</p>
-            <button class="error__link" onClick={goToPreviousPath}>Назад</button>
+        <section className="error">
+            <h1 className="error__code">{code}</h1>
+            <p className="error__message">{message}</p>
+            <button className="error__link" onClick={goToPreviousPath}>Назад</button>
         </section>
     )
 }

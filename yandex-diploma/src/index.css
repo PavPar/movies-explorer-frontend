@@ -41,16 +41,46 @@
 @import url(./blocks/error/error.css);
 @import url(./blocks/navigation/navigation.css);
 @import url(./blocks/closebtn/closebtn.css);
-
+@import url(./blocks/popup/popup.css);
 html {
   scroll-behavior: smooth;
 }
 
-button{
+button {
   cursor: pointer;
 }
 
-input{
+input {
   outline: none;
 }
 
+.header__nav_theme-white * {
+  color: white;
+}
+
+.moviecardlist__notfound {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50px;
+  color: gray;
+}
+
+
+@media screen and (max-width: 600px) {
+  .moviecardlist__notfound {
+    font-size: 25px;
+  }
+}
+
+.menubtn__hr{
+  border:none;
+  background: black;
+  height:3px;
+  margin:0;
+}
+
+.menubtn_color-white > hr {
+  background-color: white;
+}

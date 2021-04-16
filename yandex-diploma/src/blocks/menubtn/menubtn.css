@@ -1,15 +1,15 @@
 .menubtn {
-  background: center no-repeat;
-  background-image: url(../../images/menuicon.svg);
-  background-color: unset;
-  background-size: 40px 40px;
   border: none;
-  display: none;
-  width: 44px;
-  height: 44px;
+  background: none;
   position: relative;
   margin-left: auto;
   display: none;
+  width:28px;
+  height:23px;
+  display:none;
+  gap:7px;
+  justify-items: space-between;
+  padding: 0;
 }
 
 @media screen and (max-width: 600px) {
@@ -21,6 +21,6 @@
 
 @media screen and (max-width: 800px) {
   .menubtn {
-    display: block;
+    display: grid;
   }
 }
